@@ -1,2 +1,2 @@
-# COE322_fall2017
+# COE322_fall2021
 homework submissions, lecture exercise solutions, and assignments 
