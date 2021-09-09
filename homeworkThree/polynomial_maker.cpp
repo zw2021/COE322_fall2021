@@ -27,7 +27,7 @@ vector<double> set_coefficients(int degree){
 void print(vector <double> a) {
    std::cout << "Your Coefficient Vector Contains Elements: ";
    for(int i=0; i < a.size(); i++)
-   std::cout << a.at(i) << ',';
+   std::cout << a.at(i) << ',' << endl;
 }
 
 int main() {
