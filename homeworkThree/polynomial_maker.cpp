@@ -30,10 +30,10 @@ void print(vector <double> a) {
    std::cout << a.at(i) << ',' << endl;
 }
 
-int main() {
-    int degree;
-    cout << "Enter Polynomial Degree: " << endl;
-    cin >> degree;
-    print(set_coefficients(degree));
-    return 0;
-}
+//int main() {
+//    int degree;
+//    cout << "Enter Polynomial Degree: " << endl;
+//    cin >> degree;
+//    print(set_coefficients(degree));
+//    return 0;
+//}
