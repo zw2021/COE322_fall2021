@@ -1,4 +1,7 @@
 #include<iostream>
+#include<cassert>
+
+//#define NDEBUG // disables all "asserts"
 using namespace std;
 
 //## <SUMMARY> #############################################################################
@@ -24,10 +27,10 @@ int main(){
     {
         counter = 0; // reset counter after every iteration
         num = ii;
-
         // Take care of the special case when ii = 1
         if (ii == 1){
-            dummy = 3*num + 1; // we can do this bc we already know 1 is odd
+            dummy = 3*num + 1; // we can do this bc we already know 1 is od
+            assert(dummy != 1); // check if this is
             while(dummy != 1){
                 if ((dummy % 2) == 0){
                     dummy = dummy/2;
