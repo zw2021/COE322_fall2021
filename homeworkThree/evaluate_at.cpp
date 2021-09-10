@@ -11,8 +11,8 @@ double evaluate_at(vector<double> v, double x) {
     return y + x*(evaluate_at(v,x)); //recursion to evaluate next vector subset
 }
 
-int main() {
-    vector<double> v = {4,3,2,1};
-    double ans = evaluate_at(v,5);
-    cout << ans << endl;
-}
+//int main() {
+//    vector<double> v = {4,3,2,1};
+//    double ans = evaluate_at(v,5);
+//    cout << ans << endl;
+//}
