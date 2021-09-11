@@ -25,7 +25,8 @@ int is_odd_even_function(vector<double> coefficients_vector) {
     }
 
     }
-
+// find if Highest Ordered Term is Even or Odd Degree
+// e.g x^3 + x^2 would be odd, but x^2 + 2 would be even
     int is_odd(vector<double> coefficients_vector) {
     try {
         if (coefficients_vector.size() %2 != 0){
