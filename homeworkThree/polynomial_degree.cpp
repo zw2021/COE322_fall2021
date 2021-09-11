@@ -4,10 +4,10 @@
 #include "evaluate_at.cpp"
 using namespace std;
 
-// check if polynomial is even or odd degree
+// check if polynomial is even or odd function
 // odd if f(-x) = -f(x);
 
-int is_odd(vector<double> coefficients_vector) {
+int is_odd_even_function(vector<double> coefficients_vector) {
     try {
         double x = 1; // arbitrary number- can honestly be any value x
         double y_posInput = -1*(evaluate_at(coefficients_vector, x)); // compute -1*f(x)
@@ -26,8 +26,23 @@ int is_odd(vector<double> coefficients_vector) {
 
     }
 
+    int is_odd(vector<double> coefficients_vector) {
+    try {
+        if (coefficients_vector.size() %2 != 0){
+            // Highest Ordered Term is not Odd Degree
+            cout << "Highest Ordered Term is Even" << endl;
+            throw(coefficients_vector);
+           // return coefficients_vector;
+            }
+        return 20;
+}
+    catch(...) {
+        cout << "Rejecting Polynomial, Please input New Polynomial with Odd Degree Terms" << endl;
+    }
+
+    }
 
 int main(){
-    vector<double> v = {2,0,-4,0};
+    vector<double> v = {3,2,0,1};
     is_odd(v);
 }
