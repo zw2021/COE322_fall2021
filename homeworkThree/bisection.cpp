@@ -15,7 +15,7 @@ int proper_polynomial(vector<double>);
 */
 double find_zero(vector<double> coeff) {
  // vector<double> coeff = {3,2,0,1};
-  vector<double> outer = find_outer(coeff);
+  vector<double> outer = find_outer(coeff,-1,1);
   double xl = outer[0];  // left bound
   double xr = outer[1];  // right bound
   double c = 0;  //midpoint initialization
