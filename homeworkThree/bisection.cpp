@@ -7,7 +7,7 @@ double evaluate_at(vector<double>, double);
 vector<double> find_outer (vector<double>, double, double);
 vector<double> set_coefficients(int);
 void print(vector<double>);
-void proper_polynomial(vector<double>);
+bool proper_polynomial(vector<double>);
 int is_odd(vector<double>);
 
 /*int main() {
