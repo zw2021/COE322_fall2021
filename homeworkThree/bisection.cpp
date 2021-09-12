@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 */
-double find_zero(vector<double> );
+double find_zero(vector<double>, double, double);
 double evaluate_at(vector<double>, double);
 vector<double> find_outer (vector<double>, double, double);
 vector<double> set_coefficients(int);
@@ -14,11 +14,11 @@ int is_odd(vector<double>);
     return 0;
 }
 */
-double find_zero(vector<double> coeff) {
- // vector<double> coeff = {3,2,0,1};
-  vector<double> outer = find_outer(coeff,-1,1);
-  double xl = outer[0];  // left bound
-  double xr = outer[1];  // right bound
+double find_zero(vector<double> coeff, double left, double right) {
+// vector<double> coeff = {3,2,0,1};
+  //vector<double> outer = find_outer(coeff,-1,1);
+  double xl = left;  // left bound
+  double xr = right;  // right bound
   double c = 0;  //midpoint initialization
   double tol = 0.0001;  // tolerance
   //bisection method
