@@ -4,11 +4,11 @@ using namespace std;
 */
 double find_zero(vector<double>, double, double);
 double evaluate_at(vector<double>, double);
-vector<double> find_outer (vector<double>, double, double);
+void find_outer (vector<double>, double, double);
 vector<double> set_coefficients(int);
 void print(vector<double>);
 bool proper_polynomial(vector<double>);
-int is_odd(vector<double>);
+bool is_odd(vector<double>);
 
 /*int main() {
     return 0;
