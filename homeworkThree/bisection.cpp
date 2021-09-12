@@ -3,6 +3,17 @@
 #include <cmath>
 using namespace std;
 
+double find_zero(vector<double>);
+double evaluate_at(vector<double>, double);
+vector<double> find_outer (vector<double>);
+vector<double> set_coefficients(int);
+void print(vector <double>);
+int proper_polynomial();
+
+int main() {
+    return 0;
+}
+
 double find_zero(vector<double> coeff) {
  // vector<double> coeff = {3,2,0,1};
   vector<double> outer = find_outer(coeff);
