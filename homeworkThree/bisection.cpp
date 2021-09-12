@@ -1,26 +1,25 @@
-#include <iostream>
+/*#include <iostream>
 #include <vector>
-#include <cmath>
 using namespace std;
-
-double find_zero(vector<double>);
+*/
+double find_zero(vector<double> );
 double evaluate_at(vector<double>, double);
-vector<double> find_outer (vector<double>);
+vector<double> find_outer (vector<double>, double, double);
 vector<double> set_coefficients(int);
-void print(vector <double>);
-int proper_polynomial();
+void print(vector<double>);
+int proper_polynomial(vector<double>);
 
-int main() {
+/*int main() {
     return 0;
 }
-
+*/
 double find_zero(vector<double> coeff) {
  // vector<double> coeff = {3,2,0,1};
   vector<double> outer = find_outer(coeff);
   double xl = outer[0];  // left bound
   double xr = outer[1];  // right bound
   double c = 0;  //midpoint initialization
-  double tol = pow(10,-4);  // tolerance
+  double tol = 0.0001;  // tolerance
   //bisection method
   while (abs(evaluate_at(coeff,c))>tol){
      c = (xl+xr)/2;
@@ -44,7 +43,8 @@ double evaluate_at(vector<double> v, double x) {
     return y + x*(evaluate_at(v,x)); //recursion to evaluate next vector subset
 }
 
-vector<double> find_outer (vector<double> coeff) {
+vector<double> find_outer (vector<double> coeff,double left, double right) {
+  is_odd(coeff);
   double xr= 1;   //initial guess for bracket size
   double xl = -xr;
   // find brackets with positive and negative function values
@@ -73,14 +73,28 @@ void print(vector <double> a) {
    std::cout << a.at(i) << ',' << endl;
 }
 
-int proper_polynomial(){
+int proper_polynomial(vector<double> coefficients_vector){
     // check if the power of the variable is a non negtative value
     // power of the variable is raised to a fraction
 
     // check if size of vector is degree n+1
     // e.g cubic function x^3 has 4 elements: x^3 + 0x^2 +0x +0
+    try{
+	if (coefficients_vector.size() <= 0){
+	  cout << " Coefficeint Vector is Less than or Equal to 0" << endl;
+	  throw(coefficients_vector); 
+	}
+	if (coefficients.front() == 0){
+	  throw(coeffcients_vector);
+	}
+    }
+    catch(...){
+    	  cout << "Rejecting Polynomial, Please input New Polynomial" << endl;
+    }
+     //REQUIRE( coefficients.size()>0 );
+     //REQUIRE( coefficients.front()!=0. );
+     cout << "Finished Checks for Proper Polynomail" << endl;
 
-    //REQUIRE();
     return 0;
 }
 
