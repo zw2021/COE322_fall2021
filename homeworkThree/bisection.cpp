@@ -73,29 +73,25 @@ void print(vector <double> a) {
    std::cout << a.at(i) << ',' << endl;
 }
 
-int proper_polynomial(vector<double> coefficients_vector){
-    // check if the power of the variable is a non negtative value
-    // power of the variable is raised to a fraction
+vector<double> proper_polynomial(vector<double> coefficients_vector){
+// check if the power of the variable is a non negtative value
+// power of the variable is raised to a fraction
 
-    // check if size of vector is degree n+1
-    // e.g cubic function x^3 has 4 elements: x^3 + 0x^2 +0x +0
+// check if size of vector is degree n+1
+// e.g cubic function x^3 has 4 elements: x^3 + 0x^2 +0x +0
     try{
-	if (coefficients_vector.size() <= 0){
-	  cout << " Coefficeint Vector is Less than or Equal to 0" << endl;
-	  throw(coefficients_vector); 
-	}
-	if (coefficients.front() == 0){
-	  throw(coeffcients_vector);
-	}
+        if (coefficients_vector.size() <= 0){
+            cout << " Coefficeint Vector is Less than or Equal to 0" << endl;
+            throw(coefficients_vector);
+            }
+        if (coefficients_vector.front() == 0){
+            throw(coefficients_vector);
+            }
     }
     catch(...){
-    	  cout << "Rejecting Polynomial, Please input New Polynomial" << endl;
+        cout << "Rejecting Polynomial, Please input New Polynomial" << endl;
     }
-     //REQUIRE( coefficients.size()>0 );
-     //REQUIRE( coefficients.front()!=0. );
-     cout << "Finished Checks for Proper Polynomail" << endl;
-
-    return 0;
+    cout << "Finished Checks for Proper Polynomial" << endl;
 }
 
 int is_odd(vector<double> coefficients_vector) {
