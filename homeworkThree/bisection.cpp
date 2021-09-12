@@ -74,7 +74,7 @@ void print(vector <double> a) {
    std::cout << a.at(i) << ',' << endl;
 }
 
-void proper_polynomial(vector<double> coefficients_vector){
+bool proper_polynomial(vector<double> coefficients_vector){
 // check if the power of the variable is a non negtative value
 // power of the variable is raised to a fraction
 
@@ -84,15 +84,19 @@ void proper_polynomial(vector<double> coefficients_vector){
         if (coefficients_vector.size() <= 0){
             cout << " Coefficeint Vector is Less than or Equal to 0" << endl;
             throw(coefficients_vector);
+            
             }
         if (coefficients_vector.front() == 0){
             throw(coefficients_vector);
+            
             }
     }
     catch(...){
         cout << "Rejecting Polynomial, Please input New Polynomial" << endl;
+        return false;
     }
     cout << "Finished Checks for Proper Polynomial" << endl;
+    return true;
 }
 
 int is_odd(vector<double> coefficients_vector) {
