@@ -45,7 +45,8 @@ double evaluate_at(vector<double> v, double x) {
 }
 
 void find_outer (vector<double> coeff,double &left, double &right) {
-  if (is_odd(coeff)) {
+  if (!is_odd(coeff)) {
+      throw("Error");
       return;
   }
   //double xr= 1;   //initial guess for bracket size
