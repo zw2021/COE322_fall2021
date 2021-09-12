@@ -23,6 +23,7 @@ double find_zero(vector<double> coeff) {
      }
 	
   }
+  cout << "Found root " << c << " with value " << evaluate_at(coeff, 0) << "\n";
 
   return c;
 }
