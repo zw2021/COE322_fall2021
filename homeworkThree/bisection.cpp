@@ -98,4 +98,5 @@ int is_odd(vector<double> coefficients_vector) {
         cout << "Rejecting Polynomial, Please input New Polynomial with Odd Degree Terms" << endl;
     }
 
+    return 0;
 }
