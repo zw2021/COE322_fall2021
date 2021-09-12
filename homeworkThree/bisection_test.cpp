@@ -1,7 +1,7 @@
-/*#include <iostream>
+#include <iostream>
 #include <vector>
 using namespace std;
-*/
+
 double find_zero(vector<double>, double, double);
 double evaluate_at(vector<double>, double);
 void find_outer (vector<double>, double &, double &);
@@ -10,10 +10,15 @@ void print(vector<double>);
 bool proper_polynomial(vector<double>);
 bool is_odd(vector<double>);
 
-/*int main() {
+int main() {
+    vector<double> coeff = {3,2,0,1};
+    double left = 1;
+    double right = 2;
+    double zero = find_zero(coeff, left, right);
+    cout << "Zero = " << zero << endl;
     return 0;
 }
-*/
+
 double find_zero(vector<double> coeff, double left, double right) {
 // vector<double> coeff = {3,2,0,1};
   find_outer(coeff,left,right);
