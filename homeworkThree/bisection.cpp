@@ -7,7 +7,8 @@ double evaluate_at(vector<double>, double);
 vector<double> find_outer (vector<double>, double, double);
 vector<double> set_coefficients(int);
 void print(vector<double>);
-int proper_polynomial(vector<double>);
+void proper_polynomial(vector<double>);
+int is_odd(vector<double>);
 
 /*int main() {
     return 0;
@@ -73,7 +74,7 @@ void print(vector <double> a) {
    std::cout << a.at(i) << ',' << endl;
 }
 
-vector<double> proper_polynomial(vector<double> coefficients_vector){
+void proper_polynomial(vector<double> coefficients_vector){
 // check if the power of the variable is a non negtative value
 // power of the variable is raised to a fraction
 
