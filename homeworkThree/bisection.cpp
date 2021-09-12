@@ -16,7 +16,7 @@ int is_odd(vector<double>);
 */
 double find_zero(vector<double> coeff, double left, double right) {
 // vector<double> coeff = {3,2,0,1};
-  //vector<double> outer = find_outer(coeff,-1,1);
+  vector<double> outer = find_outer(coeff,-1,1);
   double xl = left;  // left bound
   double xr = right;  // right bound
   double c = 0;  //midpoint initialization
@@ -44,17 +44,30 @@ double evaluate_at(vector<double> v, double x) {
     return y + x*(evaluate_at(v,x)); //recursion to evaluate next vector subset
 }
 
-vector<double> find_outer (vector<double> coeff,double left, double right) {
-  is_odd(coeff);
-  double xr= 1;   //initial guess for bracket size
-  double xl = -xr;
-  // find brackets with positive and negative function values
-  while (evaluate_at(coeff,xr)*evaluate_at(coeff,xl) >= 0){
-          xr = xr*2;
-          xl = xl*2;
+void find_outer (vector<double> coeff,double &left, double &right) {
+  if (is_odd(coeff)) {
+      is_odd(coeff);
+      throw;
   }
-  vector<double> outer = {xl,xr};
-  return outer;
+  //double xr= 1;   //initial guess for bracket size
+  //double xl = -xr;
+  // find brackets with positive and negative function values
+  while (evaluate_at(coeff,right)*evaluate_at(coeff,left) >= 0){
+      if (right > left && right < 0) {
+        right = right + 1;
+      }
+      else if (right < left && left < 0) {
+        left  = left - 1;
+      }
+      else if (right > left && right > 0) {
+          left = left - 1;
+      }
+      else if (right < left && left > 0) {
+          right = right + 1;
+      }
+  }
+  //vector<double> outer = {xl,xr};
+  //return outer;
 }
 
 vector<double> set_coefficients(int degree){
@@ -99,7 +112,7 @@ bool proper_polynomial(vector<double> coefficients_vector){
     return true;
 }
 
-int is_odd(vector<double> coefficients_vector) {
+bool is_odd(vector<double> coefficients_vector) {
     try {
         if (coefficients_vector.size() %2 != 0){
             // Highest Ordered Term is not Odd Degree
@@ -107,11 +120,11 @@ int is_odd(vector<double> coefficients_vector) {
             throw(coefficients_vector);
            // return coefficients_vector;
             }
-        return 20;
     }
     catch(...) {
         cout << "Rejecting Polynomial, Please input New Polynomial with Odd Degree Terms" << endl;
+        return true;
     }
 
-    return 0;
+    return false;
 }
