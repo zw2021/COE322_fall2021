@@ -4,7 +4,7 @@ using namespace std;
 */
 double find_zero(vector<double>, double, double);
 double evaluate_at(vector<double>, double);
-void find_outer (vector<double>, double, double);
+void find_outer (vector<double>, double &, double &);
 vector<double> set_coefficients(int);
 void print(vector<double>);
 bool proper_polynomial(vector<double>);
@@ -16,7 +16,7 @@ bool is_odd(vector<double>);
 */
 double find_zero(vector<double> coeff, double left, double right) {
 // vector<double> coeff = {3,2,0,1};
-  vector<double> outer = find_outer(coeff,-1,1);
+  find_outer(coeff,left,right);
   double xl = left;  // left bound
   double xr = right;  // right bound
   double c = 0;  //midpoint initialization
