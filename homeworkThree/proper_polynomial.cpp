@@ -5,7 +5,7 @@
 using namespace std;
 
 
-vector<double> proper_polynomial(vector<double> coefficients_vector){
+bool proper_polynomial(vector<double> coefficients_vector){
     // check if the power of the variable is a non negtative value
     // power of the variable is raised to a fraction
 
@@ -19,15 +19,20 @@ vector<double> proper_polynomial(vector<double> coefficients_vector){
         if (coefficients_vector.front() == 0){
           throw(coefficients_vector);
         }
+        //return false;
     }
     catch(...){
     	  cout << "Rejecting Polynomial, Please input New Polynomial" << endl;
+          return false;
     }
      cout << "Finished Checks for Proper Polynomial" << endl;
+    return  true;
 }
 
 int main(){
     vector<double> vec = {0, 0,0,0};
     proper_polynomial(vec);
+    double left{11};
     return 0;
+
 }
