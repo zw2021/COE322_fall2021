@@ -14,7 +14,7 @@ class Point {
       return sqrt(x*x + y*y);
   };
   double angle(){
-      return atan2(y,x)*(180/M_PI);
+      return atan2(y,x)*(180/3.14);
   };
   float distance(Point otherpoint){
       int xdistance = otherpoint.x - x;
@@ -22,6 +22,17 @@ class Point {
 
       return sqrt((xdistance*xdistance) + (ydistance*ydistance));
   };
+  Point halfway(Point q) {
+    double xp = (x+q.x)/2;
+    double yp = (y+q.y)/2;
+    return Point(xp,yp);
+  }
+  double getX() {
+    return x;
+  }
+  double getY() {
+    return y;
+  }
 };
 
 class GridPoint {
@@ -44,9 +55,11 @@ int main() {
   Point p(3.,4.);
   Point q(0.,0);
 
-  cout << "Distance to origin: " << mypoint.distance_to_origin() << endl;
-  cout << "Angle from origin: " << mypoint.angle()<< endl;
-  cout << "Mahattan distance from origin: " << mydistance.mahattan_distance() << endl;
-  cout << "Distance from point p to q: " << p.distance(q) << endl;
+  //cout << "Distance to origin: " << mypoint.distance_to_origin() << endl;
+  //cout << "Angle from origin: " << mypoint.angle()<< endl;
+  //cout << "Mahattan distance from origin: " << mydistance.mahattan_distance() << endl;
+  //cout << "Distance from point p to q: " << p.distance(q) << endl;
+  Point h = p.halfway(q);
+  cout << "X = " << h.getX() << ", Y = " << h.getY() << endl;
   return 0;
 }
