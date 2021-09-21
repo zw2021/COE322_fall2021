@@ -31,7 +31,7 @@ class primegenerator {
         }
 
 };
-
+/*
 int main() {
     int nprimes;
     cout << "Enter Number of Primes: " << endl;
@@ -43,3 +43,4 @@ int main() {
     }
 
 }
+*/
