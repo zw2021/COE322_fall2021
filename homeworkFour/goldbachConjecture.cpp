@@ -13,7 +13,7 @@ private:
 public:
     primegenerator() {
         how_many_primes_found = 0;
-        last_number_tested = 0;
+        last_number_tested = 1;
     }
 int nextprime() {
     bool foundprime = false;
@@ -38,7 +38,7 @@ int primes_found(){
 };
     int clear_values(){
         how_many_primes_found = 0;
-        last_number_tested = 0;
+        last_number_tested = 1;
         return how_many_primes_found, last_number_tested;
     }
 };
@@ -46,27 +46,27 @@ int primes_found(){
 int main() {
 
     // run next prime until last number tested = input number
-    vector<int> even_numbers{10, 4, 8, 12 , 20};
-
+    vector<int> even_numbers{12};
     primegenerator sequence;
+
     for(int jj = 0; jj <= even_numbers.size(); jj++){//even_number = 4;
         int prime = 0;
         vector<int> prime_vec;
         while(prime < even_numbers[jj]){
                 prime = sequence.nextprime();
+                cout << "this is prime: " << prime << endl;
                 if (prime < even_numbers[jj]){
                     prime_vec.push_back(prime);
                 }
             }
         sequence.clear_values();
-
         for(int ii = 0; ii < prime_vec.size(); ii++){
             int num = prime_vec.back() + prime_vec[ii];
+            cout << "this is a sum " << num << endl;
             if(num == even_numbers[jj]){
                     cout << prime_vec[ii] << " and " << prime_vec.back() << endl;
                 }
             }
         }
             return  0;
-
 }
