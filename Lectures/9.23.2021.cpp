@@ -36,12 +36,11 @@ public:
         float area_from_coord(){ return width*height;}
 };
 
-class General{ // base class
+class Square : public Rectangle{ // derived class
 public:
-    General( double x, double y) {};
-};
-class Special : public General {
-    // calls the base class ...
+    Square(Point bottomleft,float w, float h): Rectangle(bottomleft, w,h) {
+        if (h!=h){cout << "This isn't a square!!!" << endl;};
+    };
 };
 
 /*
@@ -49,6 +48,11 @@ class Special : public General {
  * Derived classes inherit data from the class it's in
  * "Base Class" >> "Sub/ Derived Class"
  *      Base class - protected: "private to the outside world, but public to the derived classes"
+ * Derived Method can have a method that's not in the base class
+ * "inheritance is the evil from all base case" lol
+ *
+ * HOMEWORK
+ *      exercise 10
  * */
 int main() {
     Point oneone(1.,1.);
