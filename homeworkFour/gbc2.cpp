@@ -69,6 +69,7 @@ public:
     }
     return  0;
     }
+	// generate vector of even numbers up to bound
     vector<int> evengen(int bound){
         int i =0;
         int vlen = ((bound-(bound % 2))/2)-1;
