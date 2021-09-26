@@ -9,7 +9,7 @@ class primegenerator {
     public:
         primegenerator() {
             how_many_primes_found = 0;
-            last_number_tested = 0;
+            last_number_tested =10;
         }
         int nextprime() {
             bool foundprime = false;
