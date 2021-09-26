@@ -1,7 +1,12 @@
 //
 // Created by huang on 9/18/2021.
 //
-
+/*
+ * AUTHORS
+ *Nick Delurgio, npd429
+ *Pavan Shulkla, pas3488
+ *Zoelle Wong, zfw65
+ * */
 #include <iostream>
 #include <vector>
 using namespace std;
