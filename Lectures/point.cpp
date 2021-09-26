@@ -6,6 +6,10 @@ class Point {
   private:// data members
     double x, y;
   public:// methods
+    Point() {
+      x = 0;
+      y = 0;
+    }
     Point( double in_x, double in_y){
       x = in_x; 
       y = in_y;
@@ -48,18 +52,18 @@ class GridPoint {
   };
 
 };
-int main() {
+// int main() {
 
-  Point mypoint (2., 2.);
-  GridPoint mydistance(2.,2.);
-  Point p(3.,4.);
-  Point q(0.,0);
+//   Point mypoint (2., 2.);
+//   GridPoint mydistance(2.,2.);
+//   Point p(3.,4.);
+//   Point q(0.,0);
 
-  //cout << "Distance to origin: " << mypoint.distance_to_origin() << endl;
-  //cout << "Angle from origin: " << mypoint.angle()<< endl;
-  //cout << "Mahattan distance from origin: " << mydistance.mahattan_distance() << endl;
-  //cout << "Distance from point p to q: " << p.distance(q) << endl;
-  Point h = p.halfway(q);
-  cout << "X = " << h.getX() << ", Y = " << h.getY() << endl;
-  return 0;
-}
+//   //cout << "Distance to origin: " << mypoint.distance_to_origin() << endl;
+//   //cout << "Angle from origin: " << mypoint.angle()<< endl;
+//   //cout << "Mahattan distance from origin: " << mydistance.mahattan_distance() << endl;
+//   //cout << "Distance from point p to q: " << p.distance(q) << endl;
+//   Point h = p.halfway(q);
+//   cout << "X = " << h.getX() << ", Y = " << h.getY() << endl;
+//   return 0;
+// }
