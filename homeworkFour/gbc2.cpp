@@ -98,10 +98,9 @@ public:
 };
 
 int main() {
-    int bound = 2346;
-    //vector<int> even_numbers = evengen(bound);// just can't use 2
+    int bound;
+    cin >> bound;
     primegenerator sequence;
-    //vector<int> even_numbers = sequence.evengen(bound);
     sequence.goldbachConjecture(bound);
             return  0;
 }
