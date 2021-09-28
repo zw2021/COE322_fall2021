@@ -1,7 +1,12 @@
 //
 // Created by huang on 9/18/2021.
 //
-
+/*
+ * AUTHORS
+ *Nick Delurgio, npd429
+ *Pavan Shulkla, pas3488
+ *Zoelle Wong, zfw65
+ * */
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -35,7 +40,7 @@ public:
 
     int primes_found(){
         return last_number_tested;
-    };
+    }
     int clear_values(){
         how_many_primes_found = 0;
         last_number_tested = 1;
@@ -51,10 +56,10 @@ public:
             jdx = pivot + 1;
         }
             if(vec[idx] + vec[jdx] == even_num){ // base case 2 numbers sum to even number
-            cout << "These primes sum to the selected even number: " << vec[idx] << " and " << vec[jdx] << endl;
+            cout << "These primes sum to "<<even_num<<" : " << vec[idx] << " and " << vec[jdx] << endl;
             return vec[idx], vec[jdx];
         }else if (vec[idx] + vec[idx] == even_num){ // a prime plus itself sums to even number
-            cout << "This prime sums to the selected even number: " << vec[idx] << endl;
+            cout << "These primes sums to " <<even_num <<" : "<< vec[idx] <<" and "<<vec[idx]<< endl;
         }else if (vec[idx] + vec[jdx] > even_num  || vec[idx] + vec[jdx] < even_num){ // doesn't sum to even number
             jdx++;
             return checkPrime(vec, idx, jdx, pivot, even_num);
@@ -64,18 +69,31 @@ public:
     }
     return  0;
     }
-
+	// generate vector of even numbers up to bound
+    vector<int> evengen(int bound){
+        int i =0;
+        int vlen = ((bound-(bound % 2))/2)-1;
+        vector<int> even_numbers;//(0,vlen);
+        while (i<vlen){
+                even_numbers.push_back(4+2*i);// = 4+2*i;
+                i++;
+        }
+	return even_numbers;
+        
+	}
+ 
     // where the magic happens; finds all the prime numbers for a given vector of even numbers
-    int goldbackConjecture(vector<int> even_numbers){
+    int goldbachConjecture(int bound){
+	vector<int> even_numbers = evengen(bound);
         for(int jj = 0; jj < even_numbers.size(); jj++){
             int prime = 0;
             vector<int> prime_vec;
             while(prime < even_numbers[jj]){
                     prime = nextprime();
-                    cout << "this is prime: " << prime << endl;
-                    if (prime <= even_numbers[jj]){
+                  //  cout << "this is prime: " << prime << endl;
+                  //  if (prime <= even_numbers[jj]){
                         prime_vec.push_back(prime);
-                    }
+                   // }
                 }
                 clear_values();
                 int idx = 0; int jdx = 1; int pivot = 0;
@@ -86,9 +104,9 @@ public:
 };
 
 int main() {
-
-    vector<int> even_numbers{8,4,6, 10, 12};// just can't use 2
+    int bound;
+    cin >> bound;
     primegenerator sequence;
-    sequence.goldbackConjecture(even_numbers);
+    sequence.goldbachConjecture(bound);
             return  0;
 }
