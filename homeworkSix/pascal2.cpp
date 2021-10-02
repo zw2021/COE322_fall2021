@@ -32,9 +32,7 @@ public:
 
 int main() {
 	int n =6;
-	pascal num;
-//	vector<vector<int>> mat;
-//	mat = num.vals(6);	
+	pascal num;	
 	for (int p=0;p<n;p++){
 		for (int q=0;q<n;q++){
 			cout << num.vals(6)[p][q] << " ";
