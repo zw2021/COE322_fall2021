@@ -28,10 +28,29 @@ public:
 	pascal(int n) {
 		y = vals(n); 
 }
+	void print(int m) {
+		for(int i = 0; i < y.size(); i++) {
+			//cout << "Row " << i << endl;
+			for(int j = i; j < y.size() - 1; j++) {
+				//cout << "j = " << j << endl;
+				cout << " ";
+			}
+			for(int j = 0; j < y[i].size(); j++) {
+				if(y[i][j] % m != 0) {
+					cout << "* ";
+				}
+				else {
+					cout << "  ";
+				}
+			}
+			cout << endl;
+		}
+	}
 };
 
 int main() {
-	int n =6;
+	int n = 8;
+	int m = 2;
 	pascal num(n);	
 	for (int p=0;p<n;p++){
 		for (int q=0;q<n;q++){
@@ -40,6 +59,6 @@ int main() {
 	cout << endl;
 	
 	}
+	num.print(m);
 	return 0;
 }
-
