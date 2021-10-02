@@ -33,11 +33,11 @@ public:
 int main() {
 	int n =6;
 	pascal num;
-	vector<vector<int>> mat;
-	mat = num.vals(6);	
+//	vector<vector<int>> mat;
+//	mat = num.vals(6);	
 	for (int p=0;p<n;p++){
 		for (int q=0;q<n;q++){
-			cout << mat[p][q] << " ";
+			cout << num.vals(6)[p][q] << " ";
 		}
 	cout << endl;
 	
