@@ -36,12 +36,26 @@ public:
         float area_from_coord(){ return width*height;}
 };
 
+class Square : public Rectangle {
+    private:
+    public:
+
+        Square(Point bbl, float sidelength) : Rectangle(bbl,sidelength,sidelength) {}
+        
 class Square : public Rectangle{ // derived class
 public:
     Square(Point bottomleft,float w, float h): Rectangle(bottomleft, w,h) {
         if (h!=h){cout << "This isn't a square!!!" << endl;};
     };
 };
+
+// class General{ // base class
+// public:
+//     General( double x, double y) {};
+// };
+// class Special : public General {
+//     // calls the base class ...
+// };
 
 /*
  * Set Theory: If an object is in A and in B, then A is a subset of C
