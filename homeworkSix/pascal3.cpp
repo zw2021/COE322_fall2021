@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 class pascal {
@@ -28,7 +29,22 @@ public:
 	pascal(int n) {
 		y = vals(n); 
 }
+
+	void print() {
+		for(int i = 0; i < y.size(); i++) {
+			cout << "Row" << setw(3) << i+1 << ":	";
+			for(int j = i; j < y.size() - 1; j++) {
+				cout << "   ";
+			}
+			for(int j = 0; j < 1 + i; j++) {
+				cout << y[i][j] << setw(6);
+			}
+			cout << setw(0);
+			cout << endl;
+		}
+	}
 	void print(int m) {
+		cout << endl;
 		for(int i = 0; i < y.size(); i++) {
 			//cout << "Row " << i << endl;
 			for(int j = i; j < y.size() - 1; j++) {
@@ -49,7 +65,7 @@ public:
 };
 
 int main() {
-	int n = 8;
+	int n = 10;
 	int m = 2;
 	pascal num(n);	
 	for (int p=0;p<n;p++){
@@ -59,6 +75,7 @@ int main() {
 	cout << endl;
 	
 	}
+	num.print();
 	num.print(m);
 	return 0;
 }
