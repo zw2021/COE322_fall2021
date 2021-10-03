@@ -19,7 +19,13 @@ public:
 		for (int i=0;i<n;i++){
 			int j=0;
 			while (j<i+1){
-				mat[i][j] = factorial(i)/factorial(j)/factorial(i-j);
+				//mat[i][j] = factorial(i)/factorial(j)/factorial(i-j);
+				if (j == 0 || j == i) {
+					mat[i][j] = 1;
+				}
+				else {
+					mat[i][j] = mat[i-1][j-1] + mat[i-1][j];
+				}
 				j++;
 			}
 
