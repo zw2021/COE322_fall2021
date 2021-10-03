@@ -86,24 +86,24 @@ int main() {
     cin >> n;
 	int m, input;
     cin >> m;
-    vector<int> modulus;
+    /*vector<int> modulus;
     for (int ii = 0; ii <2; ii++)
         cin >> input;
         modulus.push_back(input);
-
+*/
     pascal num(n);
 
-    for(int ii = 0; ii < modulus.size(); ii++){
+    //for(int ii = 0; ii < modulus.size(); ii++){
         for (int p=0;p<n;p++){
             for (int q=0;q<n;q++){
                 cout << num.y[p][q] << " ";
             }
 	        cout << endl;
-            num.print();
-            num.print(modulus[ii]);
-	    }
 
-    }
+	    }
+            num.print();
+            num.print(m);
+    //}
 
 	return 0;
 }
