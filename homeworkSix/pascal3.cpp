@@ -36,6 +36,10 @@ public:
 		y = vals(n); 
 }
 
+	int get(int i,int j) {
+		return y[i][j];
+	}
+
 	void print() {
 		for(int i = 0; i < y.size(); i++) {
 			cout << "Row" << setw(3) << i+1 << ":	";
