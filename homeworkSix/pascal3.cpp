@@ -14,6 +14,17 @@ public:
 		}
 		return k;
 	}
+
+    vector<int> modulos(int bound){
+        int i =0;
+        vector<int> modulos_vec;
+        while (i<modulos_vec.size()){
+                modulos_vec.push_back(i);
+                i++;
+        }
+	return modulos_vec;
+
+	}
     	vector<vector<int>> vals(int n) {
         	vector<vector<int>> mat(n,vector<int>(n));
 		for (int i=0;i<n;i++){
@@ -77,17 +88,26 @@ public:
 int main() {
 	int n;
     cin >> n;
-	int m;
+	int m, input;
     cin >> m;
+    /*vector<int> modulus;
+    for (int ii = 0; ii <2; ii++)
+        cin >> input;
+        modulus.push_back(input);
+*/
     pascal num(n);
-	for (int p=0;p<n;p++){
-		for (int q=0;q<n;q++){
-			cout << num.y[p][q] << " ";
-		}
-	cout << endl;
-	
-	}
-	num.print();
-	num.print(m);
+
+    //for(int ii = 0; ii < modulus.size(); ii++){
+        for (int p=0;p<n;p++){
+            for (int q=0;q<n;q++){
+                cout << num.y[p][q] << " ";
+            }
+	        cout << endl;
+
+	    }
+            num.print();
+            num.print(m);
+    //}
+
 	return 0;
 }
