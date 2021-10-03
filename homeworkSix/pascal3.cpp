@@ -65,9 +65,11 @@ public:
 };
 
 int main() {
-	int n = 10;
-	int m = 2;
-	pascal num(n);	
+	int n;
+    cin >> n;
+	int m;
+    cin >> m;
+    pascal num(n);
 	for (int p=0;p<n;p++){
 		for (int q=0;q<n;q++){
 			cout << num.y[p][q] << " ";
