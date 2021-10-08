@@ -21,15 +21,14 @@ auto ff = [] (double x) -> double{return x*x-2;}; // lambda functions
 auto gg = [] (double x) -> double{return 2*x; };
 
 double find_zero
-( function<double(double)> f, function<double(double)> f_prime){
+( function<double(double)> ff, function<double(double)> gg, double x){
 // tells c++ that you're making a class of functions
 // function indicates class of special type; <> indicates vector of integers
-    double x{1.};
     while ( true ) {
-        auto fx = f(x);
+        auto fx = ff(x);
         cout << "f( " << x << " ) = " << fx << "\n";
         if (std::abs(fx)<1.e-10 ) break;
-            x = x - fx/f_prime(x);
+            x = x - fx/gg(x);
     }
     return x;
 }
@@ -37,10 +36,7 @@ double find_zero
 int main() {
 
     for(int n=2; n<=8; n++){
-        //double x{1.};
-        auto f_prime = [n] (double x) -> double{return (n)*pow(x, (n-1)); };
-        auto f = [n] (double x) -> double{return pow(x, (n)); };
-        cout << "sqrt(" << n << ") = " << find_zero(f, f_prime) << "\n";
+        cout << "sqrt(" << n << ") = " << find_zero(ff, gg, n) << "\n";
     }
 return 0;
 }
