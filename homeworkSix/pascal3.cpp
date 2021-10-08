@@ -47,6 +47,10 @@ public:
 		y = vals(n); 
 }
 
+	int get(int i,int j) {
+		return y[i][j];
+	}
+
 	void print() {
 		for(int i = 0; i < y.size(); i++) {
 			cout << "Row" << setw(3) << i+1 << ":	";
@@ -60,23 +64,25 @@ public:
 			cout << endl;
 		}
 	}
-	void print(int m) {
-		cout << endl;
-		for(int i = 0; i < y.size(); i++) {
-			//cout << "Row " << i << endl;
-			for(int j = i; j < y.size() - 1; j++) {
-				//cout << "j = " << j << endl;
-				cout << " ";
-			}
-			for(int j = 0; j < y[i].size(); j++) {
-				if(y[i][j] % m != 0) {
-					cout << "* ";
-				}
-				else {
-					cout << "  ";
-				}
-			}
+	void print(vector<int> m) {
+		for(int tnum = 0; tnum < m.size(); tnum++) {
 			cout << endl;
+			for(int i = 0; i < y.size(); i++) {
+				//cout << "Row " << i << endl;
+				for(int j = i; j < y.size() - 1; j++) {
+					//cout << "j = " << j << endl;
+					cout << " ";
+				}
+				for(int j = 0; j < y[i].size(); j++) {
+					if(y[i][j] % m[tnum] != 0) {
+						cout << "* ";
+					}
+					else {
+						cout << "  ";
+					}
+				}
+				cout << endl;
+			}
 		}
 	}
 };
@@ -84,8 +90,20 @@ public:
 int main() {
 	int n;
     cin >> n;
-	int m, input;
-    cin >> m;
+	int input;
+	vector<int> m;
+	int val;
+
+	while (cin >> val && val != 0) {
+		m.push_back(val);
+	}
+
+	// while (m[m.size()-1] != 0) {
+	// 	cin >> val;
+	// 	cout << endl << val << endl;
+	// 	m.push_back(val);
+	// }
+    cout << "done" << endl;
     /*vector<int> modulus;
     for (int ii = 0; ii <2; ii++)
         cin >> input;
@@ -94,15 +112,15 @@ int main() {
     pascal num(n);
 
     //for(int ii = 0; ii < modulus.size(); ii++){
-        for (int p=0;p<n;p++){
-            for (int q=0;q<n;q++){
-                cout << num.y[p][q] << " ";
-            }
-	        cout << endl;
+        // for (int p=0;p<n;p++){
+        //     for (int q=0;q<n;q++){
+        //         cout << num.y[p][q] << " ";
+        //     }
+	    //     cout << endl;
 
-	    }
-            num.print();
-            num.print(m);
+	    // }
+    num.print();
+    num.print(m);
     //}
 
 	return 0;
