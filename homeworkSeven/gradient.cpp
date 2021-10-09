@@ -11,7 +11,7 @@ using std::endl;
 #include <functional>
 using std::function;
 
-double find_zero
+double find_grad
 ( function<double(double)> f, function<double(double)> f_prime, double h){
 // tells c++ that you're making a class of functions
 // function indicates class of special type; <> indicates vector of integers
@@ -32,7 +32,7 @@ int main() {
         double h = 0.001;
         auto f_prime = [] (double x) -> double{return 3*x*x + 2*x; }; // "actual derivative"
         auto f = [] (double x) -> double{return x*x*x + x*x - 2; }; // function
-        cout << "Gradient of f with h: " << h << " = " << find_zero(f, f_prime, h) << "\n";
+        cout << "Gradient of f with h: " << h << " = " << find_grad(f, f_prime, h) << "\n";
 
     return 0;
 }

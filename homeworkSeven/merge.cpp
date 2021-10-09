@@ -1,3 +1,8 @@
+//
+// Created by huang on 10/8/2021.
+//
+
+
 /****************************************************************
  ****
  **** This file belongs with the course
@@ -21,9 +26,6 @@ using std::endl;
 #include <functional>
 using std::function;
 
-auto ff = [] (double x) -> double{return x*x-2;}; // lambda functions
-auto gg = [] (double x) -> double{return 2*x; };
-
 double find_zero
 ( function<double(double)> f, function<double(double)> f_prime){
 // tells c++ that you're making a class of functions
@@ -31,24 +33,41 @@ double find_zero
     double x =1;
     while ( true ) {
 
-        auto fx = f(x);
-        //cout << "f( " << x << " ) = " << fx << "\n";
-        if (std::abs(fx)<1.e-10 ) break;
-            x = x - fx/f_prime(x);
+    auto fx = f(x);
+    //cout << "f( " << x << " ) = " << fx << "\n";
+    if (std::abs(fx)<1.e-10 ) break;
+        x = x - fx/f_prime(x);
     }
     cout << "The root of this number is " << x << "\n";
     return x;
 }
 
+
+double find_grad
+( function<double(double)> f, function<double(double)> f_prime, double h){
+// tells c++ that you're making a class of functions
+// function indicates class of special type; <> indicates vector of integers
+double x = 1;
+double f_prime_it;
+while ( true ) {
+
+auto fx = f(x);
+auto fxh = f(x+h);
+cout << "f_prime( " << x << " ) = " << fx << "\n";
+    if (std::abs(f_prime(x)) - std:: abs(f_prime_it) <1.e-10 ) break;
+        f_prime_it = (fxh - fx)/ h;
+    }
+return f_prime_it;
+}
+
 int main() {
 
-    //for(int n=2; n<=8; n++){
-        double n;
-        cin >> n;
-        auto f_prime = [] (double x) -> double{return 2*x; };
-        auto f = [n] (double x) -> double{return x*x - n; };
-        find_zero(f, f_prime);
-        //cout << "sqrt(" << n << ") = " << find_zero(f, f_prime) << "\n";
-    //}
+    // basically merge exercises 3 and 4:(  see slide 7
+    double n;
+    cin >> n;
+    auto f_prime = [] (double x) -> double{return 2*x; };
+    auto f = [n] (double x) -> double{return x*x - n; };
+    find_zero(f, f_prime);
+
 return 0;
 }
