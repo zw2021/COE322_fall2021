@@ -7,7 +7,11 @@
  **** newton1.cxx : newton scalar example
  ****
  ****************************************************************/
-
+/* Helpful Sources for learning about NR method for square root estimation:
+ * http://www.sosmath.com/calculus/diff/der07/der07.html
+ * https://www.quora.com/What-is-the-Newton-Rapson-method-for-finding-a-square-root-of-an-integer-number-How-does-one-use-it
+ *
+ * */
 #include <iostream>
 using std::cin;
 using std::cout;
@@ -27,7 +31,7 @@ double find_zero
     double x =1;
     while ( true ) {
 
-        auto fx = ff(x);
+        auto fx = f(x);
         cout << "f( " << x << " ) = " << fx << "\n";
         if (std::abs(fx)<1.e-10 ) break;
             x = x - fx/f_prime(x);
@@ -38,8 +42,8 @@ double find_zero
 int main() {
 
     for(int n=2; n<=8; n++){
-        auto f_prime = [n] (double x) -> double{return (n)*pow(x, (n-1)); };
-        auto f = [n] (double x) -> double{return pow(x, (n))-2; };
+        auto f_prime = [] (double x) -> double{return 2*x; };
+        auto f = [n] (double x) -> double{return x*x - n; };
         cout << "sqrt(" << n << ") = " << find_zero(f, f_prime) << "\n";
     }
 return 0;
