@@ -1,6 +1,9 @@
-//
-// Created by huang on 10/8/2021.
-//
+/*
+ * Authors
+ * Nick Delurgio npd429
+ * Pavan Shukla pas3488
+ * Zoelle Wong zfw65
+ */
 
 
 /****************************************************************
@@ -25,24 +28,23 @@ using std::endl;
 #include <functional>
 using std::function;
 // finds root with one lambda argument
-double newton_root
-(function <double(double)> f){
-double x =1;
-double h = .01;
-while ( true ) {
-auto fx = f(x);
-auto fxh = f(x+h);
-auto f_prime = (fxh-fx)/h;
-if (std::abs(fx)<1.e-10 ) break;
-x = x - fx/f_prime;
-}
-cout << "The root of this number is " << x << "\n";
-return x;
-}
+double newton_root(function <double(double)> f){
+    double x =1;
+    double h = .01;
+        while ( true ) {
+            auto fx = f(x);
+            auto fxh = f(x+h);
+            auto f_prime = (fxh-fx)/h;
+                if (std::abs(fx)<1.e-10 ) break;
+                x = x - fx/f_prime;
+        }
+        cout << "The root of this number is " << x << "\n";
+    return x;
+    }
 int main() {
     int n;
     cin >> n;
     auto f = [n] (double x) -> double{return x*x - n; };
     newton_root(f);
-return 0;
+    return 0;
 }
