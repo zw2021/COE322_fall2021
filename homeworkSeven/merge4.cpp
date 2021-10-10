@@ -42,7 +42,7 @@ cout << "The root of this number is " << x << "\n";
 return x;
 }
 int main() {
-    double n;
+    int n;
     cin >> n;
     auto f = [n] (double x) -> double{return x*x - n; };
     newton_root(f);
