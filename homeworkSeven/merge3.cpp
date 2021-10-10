@@ -41,7 +41,6 @@ x = x - fx/f_prime;
 cout << "The root of this number is " << x << "\n";
 return x;
 }
-
 int main() {
     double n;
     cin >> n;
