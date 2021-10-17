@@ -85,9 +85,16 @@ public:
         while (r >= 0) {
           delete_queen(r,get_queen_col(r));
           r--;
-          if (get_queen_col(r) < grid[r].size() - 1) {
-            
-            move_queen(r,get_queen_col(r),r,get_queen_col(r)+1);
+          int next_valid = 0;
+          while(true) {
+            next_valid++;
+            if(is_valid(r,get_queen_col(r)+next_valid)) break;
+          }
+          cout << next_valid << endl;
+          cout << grid[r].size() << endl;
+          if (get_queen_col(r) < grid[r].size() - next_valid && grid[r].size() >= next_valid) {
+            cout << get_queen_col(r) << " " << grid[r].size() - next_valid << endl;
+            move_queen(r,get_queen_col(r),r,get_queen_col(r)+next_valid);
             break;
           }
         }
