@@ -47,6 +47,12 @@ public:
     }
     return true;
   }
+  bool *filled() {
+    for (int i = 0; i < grid.size(); i++) {
+      if (!row_contains_queen(i)) return false;
+    }
+    return true;
+  }
   board(vector<vector<int>> full_grid) {
     grid = full_grid;
     if (feasible()) has_solution = 1;
