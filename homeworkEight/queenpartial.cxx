@@ -27,11 +27,11 @@ class board {
 private:
   vector<vector<int>> grid;
   int next_row;
-  int has_value;
+  int has_solution;
 public:
   int next_row_to_be_filled() {return next_row;}
   bool has_value() {
-    return has_value;
+    return has_solution;
   }
   bool feasible() {
     for(int r = 0; r <= next_row; r++) {
@@ -49,7 +49,7 @@ public:
   }
   board(vector<vector<int>> full_grid) {
     grid = full_grid;
-    if (feasible()) has_value = 1;
+    if (feasible()) has_solution = 1;
   }
   board(int n) {
     //vector<vector<int>> grid(n, vector<int>(n,0));
@@ -157,13 +157,13 @@ public:
         }
         if (r < 0) {
           cout << "Error: Grid size not feasible." << endl;
-          has_value = 0;
+          has_solution = 0;
           board solution(grid);
           return solution;
         }
       }
     }
-    has_value = 1;
+    has_solution = 1;
     board solution(grid);
     return solution;
   }
