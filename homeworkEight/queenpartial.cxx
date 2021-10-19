@@ -26,7 +26,24 @@ using namespace std;
 class board {
 private:
   vector<vector<int>> grid;
+  int next_row;
+  int has_value;
 public:
+  int next_row_to_be_filled() {return next_row;}
+  bool feasible() {
+    for(int r = 0; r <= next_row; r++) {
+      if (!is_valid(r,get_queen_col(r))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  bool filled() {
+    for (int i = 0; i < grid.size(); i++) {
+      if (!row_contains_queen(i)) return false;
+    }
+    return true;
+  }
   board(int n) {
     //vector<vector<int>> grid(n, vector<int>(n,0));
     vector<int> zeros;
@@ -36,7 +53,36 @@ public:
     for(int i = 0; i < n; i++) {
       grid.push_back(zeros);
     }
-    fill_grid();
+    next_row = 0;
+    //fill_grid();
+  }
+  board(vector<int> placement) {
+    int n = placement.size();
+    vector<int> zeros;
+    for(int i = 0; i < n; i++) {
+      zeros.push_back(0);
+    }
+    for(int i = 0; i < n; i++) {
+      grid.push_back(zeros);
+    }
+    for (int i = 0; i < n; i++) {
+      grid[i][placement[i]] = 1;
+    }
+    next_row = n;
+  }
+  board(int n, vector<int> placement) {
+    vector<int> zeros;
+    for(int i = 0; i < n; i++) {
+      zeros.push_back(0);
+    }
+    for(int i = 0; i < n; i++) {
+      grid.push_back(zeros);
+    }
+    for (int i = 0; i < placement.size(); i++) {
+      grid[i][placement[i]] = 1;
+    }
+    next_row = placement.size();
+    
   }
   int val(int row, int col) {
     return grid[row][col];
@@ -51,13 +97,15 @@ public:
     }
     return false;
   }
-  void place_queen(int row, int col) {
-    cout << "placing queen at " << row << ", " << col << endl;
-    if (row > grid.size() || row < 0 || col > grid[row].size() || col < 0) {
-      cout << "Error in place_queen, row or column exceeds bound. Row = " << row << ", Col = " << col << endl;
+  void place_queen_at_column(int col) {
+    cout << "placing queen at " << next_row << ", " << col << endl;
+    if (next_row > grid.size() || next_row < 0 || col > grid[next_row].size() || col < 0) {
+      cout << "Error in place_queen, row or column exceeds bound. Row = " << next_row << ", Col = " << col << endl;
+      throw(col);
       return; 
     }
-    grid[row][col] = 1;
+    grid[next_row][col] = 1;
+    next_row++;
   }
   void delete_queen(int row, int col) {
     if (contains_queen(row,col)) {
@@ -70,14 +118,15 @@ public:
   }
   void move_queen(int row1, int col1, int row2, int col2) {
     delete_queen(row1,col1);
-    place_queen(row2,col2);
+    place_queen_at_column(col2);
     return;
   }
-  void fill_grid() {
+  void place_queens() {
     for (int r = 0; r < grid.size(); r++) {
+      next_row = r;
       for (int c = 0; c < grid[r].size(); c++) {
         if (is_valid(r,c)) {
-          place_queen(r,c);
+          place_queen_at_column(c);
           break;
         }
       }
@@ -85,6 +134,7 @@ public:
         while (r >= 0) {
           delete_queen(r,get_queen_col(r));
           r--;
+          next_row = r;
           int next_valid = 0;
           while(true) {
             next_valid++;
@@ -100,10 +150,12 @@ public:
         }
         if (r < 0) {
           cout << "Error: Grid size not feasible." << endl;
+          has_value = 0;
           return;
         }
       }
     }
+    has_value = 1;
     return;
   }
   int get_queen_col(int row) {
@@ -146,7 +198,12 @@ public:
 int main() {
   int n = 8;
   board queens(n);
+  queens.place_queens();
   queens.print();
+  bool work = queens.feasible();
+  bool filled = queens.filled();
+  cout << work << endl;
+  cout << filled << endl;
   //cout << queens.val(0,0);
   return 0;
 }
