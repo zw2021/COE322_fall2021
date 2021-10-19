@@ -44,6 +44,10 @@ public:
     }
     return true;
   }
+  board(vector<vector<int>> full_grid) {
+    grid = full_grid;
+    if (feasible()) has_value = 1;
+  }
   board(int n) {
     //vector<vector<int>> grid(n, vector<int>(n,0));
     vector<int> zeros;
@@ -121,7 +125,7 @@ public:
     place_next_queen_at_column(col2);
     return;
   }
-  void place_queens() {
+  board place_queens() {
     for (int r = 0; r < grid.size(); r++) {
       next_row = r;
       for (int c = 0; c < grid[r].size(); c++) {
@@ -151,12 +155,14 @@ public:
         if (r < 0) {
           cout << "Error: Grid size not feasible." << endl;
           has_value = 0;
-          return;
+          board solution(grid);
+          return solution;
         }
       }
     }
     has_value = 1;
-    return;
+    board solution(grid);
+    return solution;
   }
   int get_queen_col(int row) {
     for (int c = 0; c < grid[row].size(); c++) {
