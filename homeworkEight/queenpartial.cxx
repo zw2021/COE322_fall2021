@@ -82,7 +82,7 @@ public:
       grid[i][placement[i]] = 1;
     }
     next_row = placement.size();
-    
+
   }
   int val(int row, int col) {
     return grid[row][col];
@@ -97,7 +97,7 @@ public:
     }
     return false;
   }
-  void place_queen_at_column(int col) {
+  void place_next_queen_at_column(int col) {
     cout << "placing queen at " << next_row << ", " << col << endl;
     if (next_row > grid.size() || next_row < 0 || col > grid[next_row].size() || col < 0) {
       cout << "Error in place_queen, row or column exceeds bound. Row = " << next_row << ", Col = " << col << endl;
@@ -118,7 +118,7 @@ public:
   }
   void move_queen(int row1, int col1, int row2, int col2) {
     delete_queen(row1,col1);
-    place_queen_at_column(col2);
+    place_next_queen_at_column(col2);
     return;
   }
   void place_queens() {
@@ -126,7 +126,7 @@ public:
       next_row = r;
       for (int c = 0; c < grid[r].size(); c++) {
         if (is_valid(r,c)) {
-          place_queen_at_column(c);
+          place_next_queen_at_column(c);
           break;
         }
       }
