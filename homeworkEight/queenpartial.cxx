@@ -47,12 +47,6 @@ public:
     }
     return true;
   }
-  bool *filled() {
-    for (int i = 0; i < grid.size(); i++) {
-      if (!row_contains_queen(i)) return false;
-    }
-    return true;
-  }
   board(vector<vector<int>> full_grid) {
     grid = full_grid;
     if (feasible()) has_solution = 1;
@@ -134,7 +128,7 @@ public:
     place_next_queen_at_column(col2);
     return;
   }
-  board place_queens() {
+  board* place_queens() {
     for (int r = 0; r < grid.size(); r++) {
       next_row = r;
       for (int c = 0; c < grid[r].size(); c++) {
@@ -164,13 +158,13 @@ public:
         if (r < 0) {
           cout << "Error: Grid size not feasible." << endl;
           has_solution = 0;
-          board solution(grid);
+          board* solution = new board(grid);
           return solution;
         }
       }
     }
     has_solution = 1;
-    board solution(grid);
+    board* solution = new board(grid);
     return solution;
   }
   int get_queen_col(int row) {
