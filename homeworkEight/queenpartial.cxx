@@ -30,6 +30,9 @@ private:
   int has_value;
 public:
   int next_row_to_be_filled() {return next_row;}
+  bool has_value() {
+    return has_value;
+  }
   bool feasible() {
     for(int r = 0; r <= next_row; r++) {
       if (!is_valid(r,get_queen_col(r))) {
