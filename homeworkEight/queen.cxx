@@ -1,12 +1,4 @@
-/****************************************************************
- ****
- **** This file belongs with the course
- **** Introduction to Scientific Programming in C++/Fortran2003
- **** copyright 2016-2021 Victor Eijkhout eijkhout@tacc.utexas.edu
- ****
- **** queens.cxx : solution to 8-queens problem
- ****
- ****************************************************************/
+
 
 #include <iostream>
 // using std::cin;
@@ -17,10 +9,11 @@
 // using std::setprecision;
 
 #include <vector>
+#include <any>
 // using std::vector;
-// #include <chrono>
-// #include <optional>
-//using std::optional;
+#include <chrono>
+#include <optional>
+using std::optional;
 using namespace std;
 
 class board {
@@ -30,9 +23,9 @@ private:
   int has_solution;
 public:
   int next_row_to_be_filled() {return next_row;}
-  bool has_value() {
-    return has_solution;
-  }
+  // bool has_value() {
+  //   return has_solution;
+  // }
   bool feasible() {
     for(int r = 0; r <= next_row; r++) {
       if (!is_valid(r,get_queen_col(r))) {
@@ -128,7 +121,8 @@ public:
     place_next_queen_at_column(col2);
     return;
   }
-  board* place_queens() {
+  optional<board> place_queens() {
+    optional<board> solution;
     for (int r = 0; r < grid.size(); r++) {
       next_row = r;
       for (int c = 0; c < grid[r].size(); c++) {
@@ -158,13 +152,15 @@ public:
         if (r < 0) {
           cout << "Error: Grid size not feasible." << endl;
           has_solution = 0;
-          board* solution = new board(grid);
-          return solution;
+          solution = board(grid);
+         // return solution;
+          return;
         }
       }
     }
     has_solution = 1;
-    board* solution = new board(grid);
+    solution = board(grid);
+    //board* solution = new board(grid);
     return solution;
   }
   int get_queen_col(int row) {
@@ -211,8 +207,10 @@ int main() {
   queens.print();
   bool work = queens.feasible();
   bool filled = queens.filled();
-  cout << work << endl;
-  cout << filled << endl;
+  auto grid = queens.place_queens();
+  cout << grid.has_value() << endl;
+  //cout << work << endl;
+  //cout << filled << endl;
   //cout << queens.val(0,0);
   return 0;
 }
