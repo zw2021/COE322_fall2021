@@ -3,6 +3,16 @@
 #include <vector>
 using namespace std;
 
+/*
+ * HELPFUL SOURCE:
+ * https://www.geeksforgeeks.org/linked-list-set-2-inserting-a-node/
+ *
+ * Authors
+ * Nick Delurgio npd429
+ * Pavan Shukla pas3488
+ * Zoelle Wong zfw65
+ * */
+
 class Node {
  private:
   int datavalue{0};
