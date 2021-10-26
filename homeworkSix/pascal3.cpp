@@ -1,3 +1,6 @@
+//Nick Delurgio: npd429
+//Pavan Shukla: pas3488
+//Zoelle Wong: zfw65 
 #include <iostream>
 #include <vector>
 #include <iomanip>
