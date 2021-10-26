@@ -55,7 +55,7 @@ public:
           set_tail(newtail);
    }
 
-   else if(tail_ptr >= cur) & (tail_ptr <= tail){
+   else if((tail_ptr >= cur) & (tail_ptr <= tail)){
        // case when node is in between current and tail
         tail_ptr -> Sort(newtail);
    }
