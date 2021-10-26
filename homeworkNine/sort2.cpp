@@ -55,12 +55,12 @@ public:
           set_tail(newtail);
    }
 
-   else if((tail_ptr >= cur) & (tail_ptr <= tail)){
-       // case when node is in between current and tail
+   else if((tail_ptr->datavalue >= cur) & (tail_ptr->datavalue <= tail)){
+       // case when node is in between current and tail - compare data values of the node
         tail_ptr -> Sort(newtail);
    }
    else{
-       // case when node is greater than the tail
+       // case when node value is greater than the tail
        tail_ptr -> append(newtail);
    };
   }
