@@ -48,19 +48,23 @@ public:
 
   int insert(shared_ptr<Node> newtail){
       Node* cur = this; // current node
-      Node* tail = Null; // tail node - how to point to the next node????
+      //Node* temp; // tail node - how to point to the next node????
 
-   if (tail_ptr == nullptr){
+   if (cur->tail_ptr == nullptr){
        // base case; first node is larger
       set_tail(newtail);
+      return newtail->datavalue;
    }
-   else if((newtail->datavalue >= cur->datavalue) & (newtail->datavalue <= tail)){
-       // case when node is in between current and tail - compare data values of the node
-        tail_ptr -> insert(newtail);
+   else if((newtail->datavalue >= cur->datavalue) & (newtail->datavalue <= cur->tail_ptr->datavalue)){
+        // case when node is in between current and tail - compare data values of the node
+        // save the current node pointer
+        shared_ptr<Node> temp = cur->tail_ptr;
+        // set the current node to point at this one
+        set_tail(newtail);
+        newtail->set_tail(temp);
    }
-   else{
-       // case when node value is greater than the tail
-       tail_ptr -> append(newtail);
+   else if(newtail->datavalue > cur->tail_ptr->datavalue) {
+       cur->tail_ptr->insert(newtail);
    };
   }
   int Sort(shared_ptr<Node> newtail){
@@ -110,10 +114,13 @@ int main() {
   auto
     first = make_shared<Node>(23),
     second = make_shared<Node>(45),
-    third = make_shared<Node>(32);
+    third = make_shared<Node>(32),
+    fourth = make_shared<Node>(29);
 
-  first->append(second);
-  first -> append(third);
+
+  first->insert(second);
+  first -> insert(third);
+  first ->insert(fourth);
   cout << "List length: "
        << first->list_length() << endl;
   first->print();
