@@ -111,7 +111,7 @@ public:
 };
 
 int main() {
-  auto
+  /*auto
     first = make_shared<Node>(23),
     second = make_shared<Node>(45),
     third = make_shared<Node>(32),
@@ -123,7 +123,17 @@ int main() {
   first ->insert(fourth);
   cout << "List length: "
        << first->list_length() << endl;
-  first->print();
+  first->print();*/
+    auto
+    head = make_shared<Node>(0);
+  int data;
+  cin >> data;
+  while (data>0) {
+    auto newnode = make_shared<Node>(data);
+    head->insert(newnode);
+    head->print();
+    cin >> data;
+  }
   return 0;
 }
 
