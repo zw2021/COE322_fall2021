@@ -4,11 +4,11 @@ integer(8) :: i
 read *,i
 
 if(mod(i,3) == 0 .and. mod(i,5) == 0) then
-print *,"Fizzbuzz!"
+    print *,"Fizzbuzz!"
 else if(mod(i,3) == 0) then
-print *,"Fizz!"
+    print *,"Fizz!"
 else if (mod(i,5) == 0) then
-print *,"Buzz!"
+    print *,"Buzz!"
 end if
 
 end program ex2
