@@ -22,56 +22,46 @@ Program LinkedList
         type(node),pointer :: head
     end type list
 
+    ! parameters
     type(list) :: the_list
     type(node),pointer :: node_ptr
-
+    integer :: data
     nullify(the_list%head)
-
-    allocate(node_ptr); node_ptr%value = 1
-    call insert(the_list,node_ptr)
-    allocate(node_ptr); node_ptr%value = 2
-    call insert(the_list,node_ptr)
-    allocate(node_ptr); node_ptr%value = 3
-    call insert(the_list,node_ptr)
-
+    read(*,*) data
+    !call insert(the_list, 1)
+    !call insert(the_list, 5)
+    !call insert(the_list, 3)
+    !call insert(the_list, 2)
+    !call print(the_list)
+    do while(data>0)
+        call insert(the_list, data)
+        call print(the_list)
+        read(*,*) data
+    end do
     call print(the_list)
-
 contains
 
-    subroutine insert( the_list,new_node )
+    subroutine insert( the_list, val )
         implicit none
         ! parameters
         type(list),intent(inout) :: the_list
-        type(node),intent(inout),pointer :: new_node
+        integer :: val
         ! local
-        type(node),pointer :: current,previous
+        type(node),pointer :: current,previous, new_node
+        allocate(new_node);  new_node%value = val
 
         if (.not.associated(the_list%head)) then
             nullify(new_node%next)
             the_list%head => new_node
         else
-            ! you write stuff here
             current => the_list%head
-            print*, current%next%value           
-           ! if associated(current%next) == false; break
-           if(  associated(current%next) .eqv. .false.) then 
-                 print*, "error"   
-                 stop 
-           end if
-                  
-           do while((new_node%value .ge. current%value).and.(new_node%value .le.current%next%value) )  
-                    previous => current
-                    current => current%next
-           end do
-                nullify(new_node%next)
-                current%next => new_node
-       !maybe move this infron to do loop and add stop  
-            if (new_node%value .ge. current%next%value) then
+            do while(associated(current%next) .and. (current%next%value .le. new_node%value) )
                 current => current%next
-                current%next => new_node
-            end if       
+            end do
+            nullify(new_node%next)
+            new_node%next => current%next
+            current%next => new_node
         end if
-
     end subroutine insert
 
     integer function length( the_list )
