@@ -7,7 +7,10 @@
 !*** listf.F90 : linked list basics in Fortran
 !***
 !****************************************************************
-
+! AUTHORS
+! zoelle wong, zfw65
+! nick delurgio, npd429
+! pavan shukla, pas3488
 
 Program LinkedList
 
