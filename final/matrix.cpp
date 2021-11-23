@@ -91,7 +91,10 @@ Matrix addMatrices(Matrix A, Matrix B) {
         }
     }
     //cout << cdata[0] << endl;
-    return Matrix(A.getrows(),A.getrows(),A.getcols(),cdata.data());
+    Matrix C(A.getrows(),A.getrows(),A.getcols(),cdata.data());
+    C.printdata();
+    return C;
+    // Matrix(A.getrows(),A.getrows(),A.getcols(),cdata.data());
 
 }
 
@@ -102,14 +105,16 @@ int main() {
     //vector<double> one_data(lda*n,1);
     vector<double> data1 = {1,3,5,2,4,6};
     vector<double> data2 = {1,2,3,4};
+    vector<double> data3 = {2,2,3,4,5,6,7,8,9,10,11,12};
+    vector<double> data4 = {2,2,3,4,5,6,7,8,9};
     //cout << one_data[0] << endl;
     //cout << one_data.data() << endl;
-    Matrix m1(m,3,n,data1.data());
-    Matrix m2(m,2,n,data2.data());
+    Matrix m1(3,4,3,data3.data());
+    Matrix m2(3,3,3,data4.data());
     m1.print();
     m2.print();
     Matrix m3 = addMatrices(m1,m2);
-    m3.print();
+    m3.printdata();
     //m3.at(0,0);
     //m3.printdata();
     /* METHOD TO CHANGE ELEMENTS IN A MATRIX
