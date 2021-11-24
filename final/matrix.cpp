@@ -5,6 +5,7 @@
 //#include <..\GSL-main\include\gsl\span>
 #include "gsl/gsl-lite.hpp"
 
+#define INDEX(i,j,lda) (j)*(lda) + (i)
 
 
 using namespace std;
@@ -31,14 +32,11 @@ class Matrix {
             throw(1);
         }
 
-        //cout << *data << endl;
-
         this->m = m;
         this->lda = lda;
         this->n = n;
         this->data = span<double> (data,lda*n);
 
-        //this->printdata();
     }
 
     //return element function (ex. 60.3)
@@ -47,16 +45,33 @@ class Matrix {
             cout << "Error: index out of bounds" << endl;
             throw(1); 
         }
-        //cout << data[j*lda + i] << endl;
-        //this->printdata();
         return data[j*lda + i];
 
     }
 
+    auto get_double_data() {
+        double *adata;
+        adata = data.data();
+        return adata;
+    }
+
+    //Submatrices support (ex. 60.6)
+    Matrix Left(int j) {
+        return Matrix(this->m,this->lda,j,this->get_double_data());
+    }
+    Matrix Right(int j) {
+        return Matrix(this->m,this->lda,n-j,this->get_double_data() + lda*j);
+    }
+    Matrix Top(int i) {
+        return Matrix(i,this->lda,this->n,this->get_double_data());
+    }
+    Matrix Bot(int i) {
+        return Matrix(m-i,this->lda,this->n,this->get_double_data() + i);
+    }
     //for testing purposes
     void print() {
         for(int i = 0; i < m; i++) {
-            for(int j = 0; j < m; j++) {
+            for(int j = 0; j < n; j++) {
                 cout << this->at(i,j) << " ";
             }
             cout << endl;
@@ -81,40 +96,42 @@ Matrix addMatrices(Matrix A, Matrix B) {
     }
 
     vector<double> cdata(A.getrows()*B.getrows(),0);
-    //cout << cdata[0] << endl;
+    auto adata = A.get_double_data();
+    auto bdata = B.get_double_data();
     for(int j = 0; j < A.getcols(); j++) {
         for(int i = 0; i < A.getrows(); i++) {
-            //cout << A.at(i,j) << ", " << B.at(i,j) << endl;
-            //cout << j*A.getrows() + i << endl;
-            cdata[j*A.getrows() + i] = A.at(i,j) + B.at(i,j);
-            //cout << cdata[0] << endl;
+            #ifdef DEBUG
+                cdata[INDEX(j,A.getrows(),i)] = A.at(i,j) + B.at(i,j);
+            #else
+                cdata[INDEX(j,A.getrows(),i)] = adata[INDEX(j,A.getlda(),i)] + bdata[INDEX(j,B.getlda(),i)];
+            #endif
         }
     }
-    //cout << cdata[0] << endl;
     Matrix C(A.getrows(),A.getrows(),A.getcols(),cdata.data());
-    C.printdata();
+    C.print();
     return C;
-    // Matrix(A.getrows(),A.getrows(),A.getcols(),cdata.data());
-
 }
 
 int main() {
     int m = 2;
     int lda = 3;
     int n = 2;
-    //vector<double> one_data(lda*n,1);
     vector<double> data1 = {1,3,5,2,4,6};
     vector<double> data2 = {1,2,3,4};
     vector<double> data3 = {2,2,3,4,5,6,7,8,9,10,11,12};
     vector<double> data4 = {2,2,3,4,5,6,7,8,9};
-    //cout << one_data[0] << endl;
-    //cout << one_data.data() << endl;
     Matrix m1(3,4,3,data3.data());
     Matrix m2(3,3,3,data4.data());
     m1.print();
-    m2.print();
+    //m2.print();
     Matrix m3 = addMatrices(m1,m2);
-    m3.printdata();
+
+    vector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
+    Matrix m4(3,4,4,data5.data());
+    m4.print();
+    Matrix l1 = m4.Right(2);
+    l1.print();
+    //m3.print();
     //m3.at(0,0);
     //m3.printdata();
     /* METHOD TO CHANGE ELEMENTS IN A MATRIX
