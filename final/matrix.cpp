@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <array>
-//#include <..\GSL-main\include\gsl\span>
 #include "gsl/gsl-lite.hpp"
 
 #define INDEX(i,j,lda) (j)*(lda) + (i)
@@ -62,7 +61,6 @@ class Matrix {
             throw(1);
         }
 
-        //vector<double> cdata(A.getrows()*B.getrows(),0);
         auto adata = this->get_double_data();
         auto bdata = B.get_double_data();
         auto cdata = out.get_double_data();
@@ -75,8 +73,6 @@ class Matrix {
                 #endif
             }
         }
-        //Matrix C(A.getrows(),A.getrows(),A.getcols(),cdata.data());
-        //out = C;
     }
 
 
@@ -166,6 +162,18 @@ class Matrix {
             Matrix otr = out.Right(out.getcols()/2).Top(out.getrows()/2);
             Matrix obl = out.Left(out.getcols()/2).Bot(out.getrows()/2);
             Matrix obr = out.Right(out.getcols()/2).Bot(out.getrows()/2);
+
+            atl.RecursiveMatMult(btl,otl);
+            atr.RecursiveMatMult(bbl,otl);
+
+            atl.RecursiveMatMult(btr,otr);
+            atr.RecursiveMatMult(bbr,otr);
+
+            abl.RecursiveMatMult(btl,obl);
+            abr.RecursiveMatMult(bbl,obl);
+
+            abl.RecursiveMatMult(btr,obr);
+            abr.RecursiveMatMult(bbr,obr);
         }
     }
 
@@ -229,18 +237,6 @@ int main() {
     m7.print();
     m8.print();
 
-
-
-    // vector<double> data9 = {1,2,3,4};
-    // vector<double> data10 = {1,2,3,4};
-    // Matrix m9(2,2,2,data9.data());
-    // Matrix m10(2,2,2,data10.data());
-    // Matrix m11(2,2,2,vector<double>(4,0).data());
-    // m9.BlockedMatMult(m10,m11);
-    // m9.print();
-    // m10.print();
-    // m11.print();
-
     vector<double> r4c5 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     vector<double> r5c4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
     vector<double> r4c4 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -255,17 +251,16 @@ int main() {
     m20b.print();
     m20a.BlockedMatMult(m20b,m20c);
 
-    vector<double> r4c6 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-    vector<double> r6c4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-    vector<double> r4c42 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    vector<double> r8c8 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};
+    vector<double> r8c82 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};;
+    vector<double> r8c83(64,0);
 
-    Matrix m24a(4,4,6,r4c6.data());
-    Matrix m24b(6,6,4,r6c4.data());
-    Matrix m24c(4,4,4,r4c42.data());
+    Matrix m24a(8,8,8,r8c8.data());
+    Matrix m24b(8,8,8,r8c82.data());
+    Matrix m24c(8,8,8,r8c83.data());
     m24a.print();
     m24b.print();
-    m24a.BlockedMatMult(m24b,m24c);
-
+    m24a.RecursiveMatMult(m24b,m24c);
     
     m24c.print();
 
