@@ -126,35 +126,49 @@ class Matrix {
         Matrix bbl = other.Left(other.getcols()/2).Bot(other.getrows()/2);
         Matrix bbr = other.Right(other.getcols()/2).Bot(other.getrows()/2);
 
-        vector<double> o1(atl.getrows()*btl.getcols(),0);
-        vector<double> o2(atl.getrows()*btr.getcols(),0);
-        vector<double> o3(abl.getrows()*btl.getcols(),0);
-        vector<double> o4(abl.getrows()*btr.getcols(),0);
+        Matrix otl = out.Left(out.getcols()/2).Top(out.getrows()/2);
+        Matrix otr = out.Right(out.getcols()/2).Top(out.getrows()/2);
+        Matrix obl = out.Left(out.getcols()/2).Bot(out.getrows()/2);
+        Matrix obr = out.Right(out.getcols()/2).Bot(out.getrows()/2);
 
-        Matrix otl(atl.getrows(),atl.getrows(),btl.getcols(),o1.data());
         atl.MatMult(btl,otl);
         atr.MatMult(bbl,otl);
-        otl.print();
 
-        Matrix otr(atl.getrows(),atl.getrows(),btr.getcols(),o2.data());
         atl.MatMult(btr,otr);
         atr.MatMult(bbr,otr);
-        otr.print();
 
-        Matrix obl(abl.getrows(),abl.getrows(),btl.getcols(),o3.data());
         abl.MatMult(btl,obl);
         abr.MatMult(bbl,obl);
-        obl.print();
 
-        Matrix obr(abl.getrows(),abl.getrows(),btr.getcols(),o4.data());
         abl.MatMult(btr,obr);
         abr.MatMult(bbr,obr);
-        obr.print();
                 
     }
+
     //Ex 60.7
     void RecursiveMatMult(Matrix& other, Matrix& out) {
+
+        if(this->getrows() < 7 && this->getcols() < 7 && other.getrows() < 7 && other.getcols() < 7) {
+            this->BlockedMatMult(other,out);
+        }
+        else {
+            Matrix atl = this->Left(this->getcols()/2).Top(this->getrows()/2);
+            Matrix atr = this->Right(this->getcols()/2).Top(this->getrows()/2);
+            Matrix abl = this->Left(this->getcols()/2).Bot(this->getrows()/2);
+            Matrix abr = this->Right(this->getcols()/2).Bot(this->getrows()/2);
+
+            Matrix btl = other.Left(other.getcols()/2).Top(other.getrows()/2);
+            Matrix btr = other.Right(other.getcols()/2).Top(other.getrows()/2);
+            Matrix bbl = other.Left(other.getcols()/2).Bot(other.getrows()/2);
+            Matrix bbr = other.Right(other.getcols()/2).Bot(other.getrows()/2);
+
+            Matrix otl = out.Left(out.getcols()/2).Top(out.getrows()/2);
+            Matrix otr = out.Right(out.getcols()/2).Top(out.getrows()/2);
+            Matrix obl = out.Left(out.getcols()/2).Bot(out.getrows()/2);
+            Matrix obr = out.Right(out.getcols()/2).Bot(out.getrows()/2);
+        }
     }
+
     //for testing purposes
     void print() {
         for(int i = 0; i < m; i++) {
@@ -240,6 +254,20 @@ int main() {
     cout << "M20B" << endl;
     m20b.print();
     m20a.BlockedMatMult(m20b,m20c);
+
+    vector<double> r4c6 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+    vector<double> r6c4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
+    vector<double> r4c42 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+    Matrix m24a(4,4,6,r4c6.data());
+    Matrix m24b(6,6,4,r6c4.data());
+    Matrix m24c(4,4,4,r4c42.data());
+    m24a.print();
+    m24b.print();
+    m24a.BlockedMatMult(m24b,m24c);
+
+    
+    m24c.print();
 
     //m3.print();
     //m3.at(0,0);
