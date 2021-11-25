@@ -144,8 +144,8 @@ class Matrix {
     //Ex 60.7
     void RecursiveMatMult(Matrix& other, Matrix& out) {
 
-        if(this->getrows() < 7 && this->getcols() < 7 && other.getrows() < 7 && other.getcols() < 7) {
-            this->BlockedMatMult(other,out);
+        if(this->getrows() < 4 && this->getcols() < 4 && other.getrows() < 4 && other.getcols() < 4) {
+            this->MatMult(other,out);
         }
         else {
             Matrix atl = this->Left(this->getcols()/2).Top(this->getrows()/2);
