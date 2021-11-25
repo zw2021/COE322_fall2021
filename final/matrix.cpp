@@ -50,12 +50,35 @@ class Matrix {
         return data[j*lda + i];
 
     }
-
     auto get_double_data() {
         double *adata;
         adata = data.data();
         return adata;
     }
+    //Addition method (ex. 60.4)
+    void addMatrices(Matrix& B, Matrix& out) {
+        if (this->getrows() != B.getrows() || this->getcols() != B.getcols()) {
+            cout << "Error using addMatrices: Matrices do no have the same dimensions" << endl;
+            throw(1);
+        }
+
+        //vector<double> cdata(A.getrows()*B.getrows(),0);
+        auto adata = this->get_double_data();
+        auto bdata = B.get_double_data();
+        auto cdata = out.get_double_data();
+        for(int j = 0; j < this->getcols(); j++) {
+            for(int i = 0; i < this->getrows(); i++) {
+                #ifdef DEBUG
+                    cdata[INDEX(j,this->getrows(),i)] = this->at(i,j) + B.at(i,j);
+                #else
+                    cdata[INDEX(j,this->getrows(),i)] = adata[INDEX(j,this->getlda(),i)] + bdata[INDEX(j,B.getlda(),i)];
+                #endif
+            }
+        }
+        //Matrix C(A.getrows(),A.getrows(),A.getcols(),cdata.data());
+        //out = C;
+    }
+
 
     //Submatrices support (ex. 60.6)
     Matrix Left(int j) {
@@ -90,36 +113,8 @@ class Matrix {
         return;
     }
 
-    // void BlockedMatMult(Matrix& other, Matrix& out) {
-    //     auto adata = this->get_double_data();
-    //     auto bdata = other.get_double_data();
-    //     auto cdata = out.get_double_data();
-    //     if(this->m != 2 || this->n != 2 || other.getrows() != 2 || other.getcols() != 2 || out.getrows() != 2 || out.getcols() != 2) {
-    //         cout << "Error: BlockedMatMal matrix not 2x2" << endl;
-    //         throw(1);
-    //     }
-    //     #ifdef DEBUG
-    //         out.at(0,0) = this->at(0,0)*other.at(0,0) + this->at(0,1)*other.at(1,0);
-    //         out.at(0,1) = this->at(0,0)*other.at(0,1) + this->at(0,1)*other.at(1,1);
-    //         out.at(1,0) = this->at(1,0)*other.at(0,0) + this->at(1,1)*other.at(1,0);
-    //         out.at(1,1) = this->at(1,0)*other.at(0,1) + this->at(1,1)*other.at(1,1);
-    //     #else
-    //         cdata[INDEX(0,0,out.getlda())] = adata[INDEX(0,0,this->getlda())]*bdata[INDEX(0,0,other.getlda())] + adata[INDEX(0,1,this->getlda())]*bdata[INDEX(1,0,other.getlda())];
-    //         cdata[INDEX(0,1,out.getlda())] = adata[INDEX(0,0,this->getlda())]*bdata[INDEX(0,1,other.getlda())] + adata[INDEX(0,1,this->getlda())]*bdata[INDEX(1,1,other.getlda())];
-    //         cdata[INDEX(1,0,out.getlda())] = adata[INDEX(1,0,this->getlda())]*bdata[INDEX(0,0,other.getlda())] + adata[INDEX(1,1,this->getlda())]*bdata[INDEX(1,0,other.getlda())];
-    //         cdata[INDEX(1,1,out.getlda())] = adata[INDEX(1,0,this->getlda())]*bdata[INDEX(0,1,other.getlda())] + adata[INDEX(1,1,this->getlda())]*bdata[INDEX(1,1,other.getlda())];
-    //     #endif
-    // }
-    void BlockedMatMult(Matrix& other, Matrix& out) {
-        // Matrix aleft = this->Left(this->getcols()/2);
-        // Matrix aright = this->Right(this->getcols()/2);
-        // Matrix atop = this->Top(this->getrows()/2);
-        // Matrix abot = this->Bot(this->getrows()/2);
 
-        // Matrix bleft = other.Left(this->getcols()/2);
-        // Matrix bright = other.Right(this->getcols()/2);
-        // Matrix btop = other.Top(this->getrows()/2);
-        // Matrix bbot = other.Bot(this->getrows()/2);
+    void BlockedMatMult(Matrix& other, Matrix& out) {
 
         Matrix atl = this->Left(this->getcols()/2).Top(this->getrows()/2);
         Matrix atr = this->Right(this->getcols()/2).Top(this->getrows()/2);
@@ -131,10 +126,31 @@ class Matrix {
         Matrix bbl = other.Left(other.getcols()/2).Bot(other.getrows()/2);
         Matrix bbr = other.Right(other.getcols()/2).Bot(other.getrows()/2);
 
-        Matrix otl(atl.getrows(),atl.getrows(),btl.getcols(),vector<double>(atl.getrows()*btl.getcols(),0).data());
-        addMatrices(atl.MatMult(btl,otl),atr.MatMult(bbl,otl),otl);
+        vector<double> o1(atl.getrows()*btl.getcols(),0);
+        vector<double> o2(atl.getrows()*btr.getcols(),0);
+        vector<double> o3(abl.getrows()*btl.getcols(),0);
+        vector<double> o4(abl.getrows()*btr.getcols(),0);
+
+        Matrix otl(atl.getrows(),atl.getrows(),btl.getcols(),o1.data());
+        atl.MatMult(btl,otl);
+        atr.MatMult(bbl,otl);
         otl.print();
-        
+
+        Matrix otr(atl.getrows(),atl.getrows(),btr.getcols(),o2.data());
+        atl.MatMult(btr,otr);
+        atr.MatMult(bbr,otr);
+        otr.print();
+
+        Matrix obl(abl.getrows(),abl.getrows(),btl.getcols(),o3.data());
+        abl.MatMult(btl,obl);
+        abr.MatMult(bbl,obl);
+        obl.print();
+
+        Matrix obr(abl.getrows(),abl.getrows(),btr.getcols(),o4.data());
+        abl.MatMult(btr,obr);
+        abr.MatMult(bbr,obr);
+        obr.print();
+                
     }
     //Ex 60.7
     void RecursiveMatMult(Matrix& other, Matrix& out) {
@@ -159,29 +175,7 @@ class Matrix {
     
 };
 
-//Addition method (ex. 60.4)
-void addMatrices(Matrix A, Matrix B, Matrix& out) {
-    if (A.getrows() != B.getrows() || A.getcols() != B.getcols()) {
-        cout << "Error using addMatrices: Matrices do no have the same dimensions" << endl;
-        throw(1);
-    }
 
-    //vector<double> cdata(A.getrows()*B.getrows(),0);
-    auto adata = A.get_double_data();
-    auto bdata = B.get_double_data();
-    auto cdata = out.get_double_data();
-    for(int j = 0; j < A.getcols(); j++) {
-        for(int i = 0; i < A.getrows(); i++) {
-            #ifdef DEBUG
-                cdata[INDEX(j,A.getrows(),i)] = A.at(i,j) + B.at(i,j);
-            #else
-                cdata[INDEX(j,A.getrows(),i)] = adata[INDEX(j,A.getlda(),i)] + bdata[INDEX(j,B.getlda(),i)];
-            #endif
-        }
-    }
-    //Matrix C(A.getrows(),A.getrows(),A.getcols(),cdata.data());
-    //out = C;
-}
 
 int main() {
     int m = 2;
@@ -196,7 +190,7 @@ int main() {
     Matrix m3(3,3,3,data4.data());
     m1.print();
     m2.print();
-    addMatrices(m1,m2,m3);
+    m1.addMatrices(m2,m3);
     m3.print();
 
     vector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
