@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+using namespace std::chrono;
 
 using namespace std;
 
@@ -62,6 +64,21 @@ class matrix {
         }
         return C;
     }
+
+    // Exercise 60.1
+    matrix simple_product_variant(matrix B) { // Simple, computationally expensive way to multiple matrices. A.simple_product(B) = A*B. Solves Exercise 60.1.
+        matrix C(nrows(), B.ncols(), 0); //Allocates size of solution matrix C
+        for(int i = 0; i < B.ncols(); i++) {
+            for(int j = 0; j < B.nrows(); j++) {
+                double sum = 0;
+                for (int k = 0; k < B.nrows(); k++) {
+                    sum += getVal(i,k) * B.getVal(k,j);
+                }
+                C.setVal(i,j,sum);
+            }
+        }
+        return C;
+    }
 };
 
 int main() {
@@ -69,6 +86,13 @@ int main() {
     A.print();
     matrix B({{1,2},{3,4},{5,6}});
     B.print();
-    matrix C = A.simple_product(B);
+    // time product function
+    auto start = high_resolution_clock::now();
+        matrix C = A.simple_product_variant(B); // call function
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Time taken by function: "
+         << duration.count() << " microseconds" << endl;
+
     C.print();
 }
