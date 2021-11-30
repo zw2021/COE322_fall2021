@@ -2,13 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
-//<<<<<<< HEAD
-//#include <..\GSL-main\include\gsl\span>
-//#include "GSL-main"///gsl-lite.hpp"
-//=======
 #include "gsl/gsl-lite.hpp"
-//>>>>>>> 36156feaf67fd9fab30f02627e9a3a201deb7161
-
 #define INDEX(i,j,lda) (j)*(lda) + (i)
 
 
@@ -255,6 +249,7 @@ int main() {
     cout << "M20B" << endl;
     m20b.print();
     m20a.BlockedMatMult(m20b,m20c);
+    /*
 
     vector<double> r8c8 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};
     vector<double> r8c82 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};;
@@ -267,15 +262,8 @@ int main() {
     m24b.print();
     m24a.RecursiveMatMult(m24b,m24c);
     
-    m24c.print();
+    m24c.print();*/
 
-    //m3.print();
-    //m3.at(0,0);
-    //m3.printdata();
-    /* METHOD TO CHANGE ELEMENTS IN A MATRIX
-    double& x = mat.at(1,1);
-    x = 5;
-    cout << mat.at(1,1) << endl;
-    */
+
     return 0;
 }
