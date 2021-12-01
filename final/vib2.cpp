@@ -255,7 +255,7 @@ int main() {
     auto duration2 = duration_cast<microseconds>(stop2 - start2);
     cout << "Time taken by function: "
     << duration2.count() << " microseconds" << endl;
-
+/*
 
     // Test adding 6 by 3 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
