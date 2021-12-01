@@ -218,7 +218,7 @@ int main() {
                             0,0,0,0,0,g}; // Dummy Matrix
 
      // Test adding 2 by 2 matrices
-
+    cout << "Computing Matrix Product. Result is: " << endl;
     auto start = high_resolution_clock::now();    // time product function
         Matrix m1(2,6,2,data1.data());
         Matrix m2(2,6,2,data2.data());
@@ -231,6 +231,7 @@ int main() {
     << duration.count() << " microseconds" << endl;
 
     // Test adding 3 by 3 matrices
+    cout << "Computing Matrix Product. Result is: " << endl;
         auto start1 = high_resolution_clock::now();    // time product function
         Matrix m4(3,6,3,data1.data());
         Matrix m5(3,6,3,data2.data());
@@ -243,15 +244,32 @@ int main() {
     << duration1.count() << " microseconds" << endl;
 
     // Test adding 4 by 4 matrices
+    cout << "Computing Matrix Product. Result is: " << endl;
+    auto start2 = high_resolution_clock::now();    // time product function
+        Matrix m7(4,6,4,data1.data());
+        Matrix m8(4,6,4,data2.data());
+        Matrix m9(4,6,4,data3.data());
+        m9.addMatrices(m7, m8);
+        m8.print();
+    auto stop2 = high_resolution_clock::now();
+    auto duration2 = duration_cast<microseconds>(stop2 - start2);
+    cout << "Time taken by function: "
+    << duration2.count() << " microseconds" << endl;
 
-    Matrix m7(4,6,4,data1.data());
-    Matrix m8(4,6,4,data2.data());
-    Matrix m9(4,6,4,data3.data());
 
     // Test adding 6 by 6 matrices
-    Matrix m10(6,6,6,data1.data());
-    Matrix m11(6,6,6,data2.data());
-    Matrix m12(6,6,6,data3.data());
+    cout << "Computing Matrix Product. Result is: " << endl;
+    auto start3 = high_resolution_clock::now();    // time product function
+        Matrix m10(6,6,6,data1.data());
+        Matrix m11(6,6,6,data2.data());
+        Matrix m12(6,6,6,data3.data());
+        m12.addMatrices(m10, m11);
+        m11.print();
+    auto stop3 = high_resolution_clock::now();
+    auto duration3 = duration_cast<microseconds>(stop3 - start3);
+    cout << "Time taken by function: "
+    << duration3.count() << " microseconds" << endl;
+
     // Tests varying dynamic viscosity at different orders of magnitude
     /*
     vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water.
