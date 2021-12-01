@@ -238,9 +238,9 @@ int main() {
         m6.addMatrices(m4,m5);
         m5.print();
     auto stop1 = high_resolution_clock::now();
-    auto duration1 = duration_cast<microseconds>(stop - start);
+    auto duration1 = duration_cast<microseconds>(stop1 - start1);
     cout << "Time taken by function: "
-    << duration.count() << " microseconds" << endl;
+    << duration1.count() << " microseconds" << endl;
 
     // Test adding 4 by 4 matrices
 
