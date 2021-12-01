@@ -8,28 +8,56 @@ P = 1; % pressure constant, normalized to 1 [Pa]
 % mu is dynamic viscosity of liquid
 % x is location; choosing a super big x to ensure flow is fully devloped
 % Velocity components %
-syms x y mu 
+syms x y z mu 
 
-u = (1/(2*mu))*P*(y^2-h*y)+x^2;
+u = (1/(2*mu))*P*(y^2-h*y)+x^2*z^3;
 v = y^3 + h*y;
+w = y^3 + x;
 
 du_dx = diff(u,x);
 du_dy = diff(u,y);
+du_dz = diff(u,z);
 dv_dx = diff(v,x);
 dv_dy = diff(v,y);
+dv_dz = diff(v,z);
+dw_dx = diff(w,x);
+dw_dy = diff(w,y);
+dw_dz = diff(w,z);
 %% compute x-y components of angular strain
 exy = 1/2*(dv_dx + du_dy);
+ezx = 1/2*(du_dz + dw_dx);
+ezy = 1/2*(dw_dy + dv_dz);
 %% compute linear strain
 exx = du_dx;
 eyy = dv_dy;
-%% get Shear matrix
+ezz = dw_dz;
+%% get Shear matrix at centerline velocity; y = 0.5
 val = 1e-3; % subsitute kinematic visocisity for water 
-exx_val = subs(exx, {x, y}, {100,0.5});
-eyy_val = subs(eyy, {x, y}, {100,0.5});
-exy_val = subs(exy, {x, y}, {100,0.5});
-S = [double(exx_val), double(exy_val); double(exy_val) double(eyy_val)];
-S = 2*mu*S;
+exx_val = subs(exx, {x, y, z}, {100,0.5, 1});
+eyy_val = subs(eyy, {x, y, z}, {100,0.5, 1});
+ezz_val = subs(ezz, {x, y, z}, {100,0.5, 1});
+exy_val = subs(exy, {x, y, z}, {100,0.5, 1});
+ezx_val = subs(ezx, {x, y, z}, {100,0.5, 1});
+ezy_val = subs(ezy, {x, y, z}, {100,0.5, 1});
+ezz_val = subs(ezz, {x, y, z}, {100,0.5, 1});
 
+S = [double(exx_val), double(exy_val) double(ezx_val); ...
+    double(exy_val) double(eyy_val) double(ezy_val);...
+    double(ezx_val) double(ezy_val) double(ezz_val)];
+S = 2*mu*S;
+%% get Shear matrix at centerline velocity; y = 0
+val = 1e-3; % subsitute kinematic visocisity for water 
+exx_val = subs(exx, {x, y, z}, {100,0, 1});
+eyy_val = subs(eyy, {x, y, z}, {100,0, 1});
+ezz_val = subs(ezz, {x, y, z}, {100,0, 1});
+exy_val = subs(exy, {x, y, z}, {100,0, 1});
+ezx_val = subs(ezx, {x, y, z}, {100,0, 1});
+ezy_val = subs(ezy, {x, y, z}, {100,0, 1});
+
+S = [(exx_val), (exy_val) (ezx_val); ...
+    (exy_val) (eyy_val) (ezy_val);...
+    (ezx_val) (ezy_val) (ezz_val)];
+S = 2*mu*S;
 %% plot shear vector field 
 %{
 xlabel("x"); ylabel("y");
