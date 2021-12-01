@@ -256,7 +256,7 @@ int main() {
     cout << "Time taken by function: "
     << duration2.count() << " microseconds" << endl;
 
-
+/*
     // Test adding 6 by 6 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start3 = high_resolution_clock::now();    // time product function
@@ -269,7 +269,7 @@ int main() {
     auto duration3 = duration_cast<microseconds>(stop3 - start3);
     cout << "Time taken by function: "
     << duration3.count() << " microseconds" << endl;
-
+*/
     // Tests varying dynamic viscosity at different orders of magnitude
     /*
     vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water.
