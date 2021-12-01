@@ -1,4 +1,4 @@
-//Compile line: icpc -I${TACC_GSL_INC} final/matrix.cpp
+//Compile line: icpc -I${TACC_GSL_INC} final/vib2.cpp
 #include <iostream>
 #include <vector>
 #include <array>
@@ -231,14 +231,14 @@ int main() {
     << duration.count() << " microseconds" << endl;
 
     // Test adding 3 by 3 matrices
-        auto start = high_resolution_clock::now();    // time product function
+        auto start1 = high_resolution_clock::now();    // time product function
         Matrix m4(3,6,3,data1.data());
         Matrix m5(3,6,3,data2.data());
         Matrix m6(3,6,3,data3.data());
         m6.addMatrices(m4,m5);
         m5.print();
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
+    auto stop1 = high_resolution_clock::now();
+    auto duration1 = duration_cast<microseconds>(stop - start);
     cout << "Time taken by function: "
     << duration.count() << " microseconds" << endl;
 
