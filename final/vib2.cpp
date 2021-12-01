@@ -205,11 +205,8 @@ class Matrix {
 
 
 int main() {
-    double k = 1;
-    double b = 1;
-    double m = 1;
-    double g = 9.81;
-    double mu; // visc
+
+    double g = 9.81; // gravity
 
     vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water
     vector<double> data2 = {g,0,0,0,g,0,0,0,g};// Body Forces Matrix 
@@ -218,21 +215,22 @@ int main() {
     Matrix m1(2,3,2,data1.data());
     Matrix m2(2,3,2,data2.data());
     Matrix m3(2,3,2,data3.data());
-    //Matrix m5(2,4,3,data1.data());// A matrix with damper
+    // Test case where wing just has a spring
     
     m1.print();
     m2.print();
-   // Test case where wing just has a spring
-    //m2.MatMult(m1,m2);
-    //m2.print();
 
     m3.addMatrices(m1,m2);
     m2.print();
 
-
    // Test case with varying viscosity 
-   mu = [0, 0.0001, 0.001, 0.01, 0.1, 1, 10];
-   
+   vector<double> mu = [0, 0.0001, 0.001, 0.01, 0.1, 1, 10];// Vary viscosity within order of magnitudes
+   for (int ii = 0; ii< mu.size(); ii++){
+    vector<double> data5 = {400*mu[ii],0,0, 0,7*mu[ii]*0.5,0,0,0};//Shear Matrix
+    Matrix m5(2,3,2,data5.data());
+    m3.addMatrices(m1,m5);
+    m5.print();
+}
 /*
     vector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
     Matrix m4(3,4,4,data5.data());
