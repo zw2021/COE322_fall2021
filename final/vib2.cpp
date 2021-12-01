@@ -224,7 +224,7 @@ int main() {
     m2.print();
 
    // Test case with varying viscosity 
-   vector<double> mu = [0, 0.0001, 0.001, 0.01, 0.1, 1, 10];// Vary viscosity within order of magnitudes
+   vector<double> mu = {0, 0.0001, 0.001, 0.01, 0.1, 1, 10};// Vary viscosity within order of magnitudes
    for (int ii = 0; ii< mu.size(); ii++){
     vector<double> data5 = {400*mu[ii],0,0, 0,7*mu[ii]*0.5,0,0,0};//Shear Matrix
     Matrix m5(2,3,2,data5.data());
