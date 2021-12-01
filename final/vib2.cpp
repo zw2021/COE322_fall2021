@@ -255,14 +255,13 @@ int main() {
     auto duration2 = duration_cast<microseconds>(stop2 - start2);
     cout << "Time taken by function: "
     << duration2.count() << " microseconds" << endl;
-/*
 
     // Test adding 6 by 3 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start3 = high_resolution_clock::now();    // time product function
-        Matrix m10(6,6,3,data1.data());
-        Matrix m11(6,6,3,data2.data());
-        Matrix m12(6,6,3,data3.data());
+        Matrix m10(5,6,3,data1.data());
+        Matrix m11(5,6,3,data2.data());
+        Matrix m12(5,6,3,data3.data());
         m12.addMatrices(m10, m11);
         m11.print();
     auto stop3 = high_resolution_clock::now();
