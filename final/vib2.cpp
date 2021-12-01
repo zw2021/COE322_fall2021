@@ -206,16 +206,15 @@ class Matrix {
 
 int main() {
 
-    double g = 9.81; // gravity
+    double g = 9.81; // gravity, [kg/m*s^2]
 
-    vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water
+    vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water. 
     vector<double> data2 = {g,0,0,0,g,0,0,0,g};// Body Forces Matrix 
-    vector<double> data3 = {g,0,0,0,0,0,0,0,g};
-    vector<double> data4 = {0,0,0,0};
+    vector<double> data3 = {g,0,0,0,0,0,0,0,g}; // Dummy Matrix
     Matrix m1(2,3,2,data1.data());
     Matrix m2(2,3,2,data2.data());
     Matrix m3(2,3,2,data3.data());
-    // Test case where wing just has a spring
+    // Test cases for a known viscosity. In this case, we're using water
     
     m1.print();
     m2.print();
@@ -223,7 +222,7 @@ int main() {
     m3.addMatrices(m1,m2);
     m2.print();
 
-   // Test case with varying viscosity 
+   // Test case with varying arbitrary viscosity values within orders of magnitude
    vector<double> mu = {0, 0.0001, 0.001, 0.01, 0.1, 1, 10};// Vary viscosity within order of magnitudes
    for (int ii = 0; ii< mu.size(); ii++){
     vector<double> data5 = {400*mu[ii],0,0, 0,7*mu[ii]*0.5,0,0,0};//Shear Matrix
@@ -231,63 +230,5 @@ int main() {
     m3.addMatrices(m1,m5);
     m5.print();
 }
-/*
-    ector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
-    Matrix m4(3,4,4,data5.data());
-    //m4.print();
-    Matrix l1 = m4.Right(2);
-    //l1.print();
-
-    m1.print();
-    m2.print();
-    Matrix m5(3,3,3,vector<double>(9,0).data());
-    m1.MatMult(m2, m5);
-    m5.print();
-
-    vector<double> data6 = {1,2,3,4,5,6,7,8,9};
-    vector<double> data7 = {2,3,4};
-    Matrix m6(3,3,3,data6.data());
-    Matrix m7(3,3,1,data7.data());
-    Matrix m8(3,3,1,vector<double>(3,0).data());
-    m6.MatMult(m7,m8);
-    m6.print();
-    m7.print();
-    m8.print();
-
-    vector<double> r4c5 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    vector<double> r5c4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-    vector<double> r4c4 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-    Matrix m20a(4,4,5,r4c5.data());
-    Matrix m20b(5,5,4,r4c5.data());
-    //Matrix m20c(4,4,4,vector<double>(16,0).data());
-    Matrix m20c(4,4,4,r4c4.data());
-    cout << "M20A" << endl;
-    m20a.print();
-    cout << "M20B" << endl;
-    m20b.print();
-    m20a.BlockedMatMult(m20b,m20c);
-
-    vector<double> r8c8 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};
-    vector<double> r8c82 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64};;
-    vector<double> r8c83(64,0);
-
-    Matrix m24a(8,8,8,r8c8.data());
-    Matrix m24b(8,8,8,r8c82.data());
-    Matrix m24c(8,8,8,r8c83.data());
-    m24a.print();
-    m24b.print();
-    m24a.RecursiveMatMult(m24b,m24c);
-    
-    m24c.print();
-
-    //m3.print();
-    //m3.at(0,0);
-    //m3.printdata();
-    /* METHOD TO CHANGE ELEMENTS IN A MATRIX
-    double& x = mat.at(1,1);
-    x = 5;
-    cout << mat.at(1,1) << endl;
-    */
     return 0;
 }
