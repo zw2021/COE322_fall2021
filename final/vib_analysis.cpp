@@ -199,33 +199,35 @@ class Matrix {
 
 
 int main() {
-    int m = 2;
-    int lda = 3;
-    int n = 2;
-    vector<double> data1 = {1,3,5,2,4,6};
-    vector<double> data2 = {1,2,3,4};
-    vector<double> data3 = {2,2,3,4,5,6,7,8,9,10,11,12};
+   
+    double m = 1.0; // mass [kg]
+    double k = 1.0; // stiffness 
+    double b = -1.0; // damper
+    vector<double> X = {1, 0}; //
+    vector<double> body_forces = {0, 9.81, 0, 0};
+    vector<double> A = {0, k/m, 0, 0, 0, 0, 0, 0, 0, b, 0, 0, 0, 0, 0, 0};
     vector<double> data4 = {2,2,3,4,5,6,7,8,9};
-    Matrix m1(3,4,3,data3.data());
-    Matrix m2(3,3,3,data4.data());
-    Matrix m3(3,3,3,data4.data());
+    Matrix m1(2,4,2,A.data());
+    Matrix m2(2,4,1,body_forces.data());
+    
     m1.print();
     m2.print();
-    m1.addMatrices(m2,m3);
-    m3.print();
+    //m1.MatMult(m1, m2).print();
+    //m1.addMatrices(m2,m3);
+    //m3.print();
 
-    vector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
-    Matrix m4(3,4,4,data5.data());
+   // vector<double> data5 = {1,2,3,4,5,6,7,8,9,10,10,12,13,14,15,16};
+    //Matrix m4(3,4,4,data5.data());
     //m4.print();
-    Matrix l1 = m4.Right(2);
+    //Matrix l1 = m4.Right(2);
     //l1.print();
 
     m1.print();
     m2.print();
     Matrix m5(3,3,3,vector<double>(9,0).data());
-    m1.MatMult(m2, m5);
+    //m1.MatMult(m2, m5);
     m5.print();
-
+/*
     vector<double> data6 = {1,2,3,4,5,6,7,8,9};
     vector<double> data7 = {2,3,4};
     Matrix m6(3,3,3,data6.data());
