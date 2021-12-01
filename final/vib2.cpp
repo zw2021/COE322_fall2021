@@ -2,12 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <array>
-//<<<<<<< HEAD
-//#include <..\GSL-main\include\gsl\span>
-//#include "GSL-main"///gsl-lite.hpp"
-//=======
 #include "gsl/gsl-lite.hpp"
-//>>>>>>> 36156feaf67fd9fab30f02627e9a3a201deb7161
+
+#include <chrono>
+using namespace std::chrono;
 
 #define INDEX(i,j,lda) (j)*(lda) + (i)
 
@@ -207,8 +205,56 @@ class Matrix {
 int main() {
 
     double g = 9.81; // gravity, [kg/m*s^2]
+    double mu = 0.0001; // dynamic viscosity of water
 
-    vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water. 
+    vector<double> data1 = {400*mu,0,3001*mu, 400*mu,-0.5,0,3001*mu,
+                            0,3.5*mu, .75*mu,-0.5,2*mu,0,
+                            3001*mu,.75*mu,0,3001*mu, 0, 0};//Shear Matrix, water.
+    vector<double> data2 = {g,0,0,g,0,0,
+                            0,g,0,0,g,0,
+                            0,0,g,0,0,g};// Body Forces Matrix
+    vector<double> data3 = {g,0,0,0,0,0,
+                            0,0,g,0,0,0,
+                            0,0,0,0,0,g}; // Dummy Matrix
+
+     // Test adding 2 by 2 matrices
+
+    auto start = high_resolution_clock::now();    // time product function
+        Matrix m1(2,6,2,data1.data());
+        Matrix m2(2,6,2,data2.data());
+        Matrix m3(2,6,2,data3.data());
+        m3.addMatrices(m1,m2);
+        m2.print();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Time taken by function: "
+    << duration.count() << " microseconds" << endl;
+
+    // Test adding 3 by 3 matrices
+        auto start = high_resolution_clock::now();    // time product function
+        Matrix m4(3,6,3,data1.data());
+        Matrix m5(3,6,3,data2.data());
+        Matrix m6(3,6,3,data3.data());
+        m6.addMatrices(m4,m5);
+        m5.print();
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << "Time taken by function: "
+    << duration.count() << " microseconds" << endl;
+
+    // Test adding 4 by 4 matrices
+
+    Matrix m7(4,6,4,data1.data());
+    Matrix m8(4,6,4,data2.data());
+    Matrix m9(4,6,4,data3.data());
+
+    // Test adding 6 by 6 matrices
+    Matrix m10(6,6,6,data1.data());
+    Matrix m11(6,6,6,data2.data());
+    Matrix m12(6,6,6,data3.data());
+    // Tests varying dynamic viscosity at different orders of magnitude
+    /*
+    vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water.
     vector<double> data2 = {g,0,0,0,g,0,0,0,g};// Body Forces Matrix 
     vector<double> data3 = {g,0,0,0,0,0,0,0,g}; // Dummy Matrix
     Matrix m1(2,3,2,data1.data());
@@ -229,6 +275,7 @@ int main() {
     Matrix m5(2,3,2,data5.data());
     m3.addMatrices(m1,m5);
     m5.print();
+     */
 }
     return 0;
 }
