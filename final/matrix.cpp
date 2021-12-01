@@ -2,12 +2,12 @@
 #include <iostream>
 #include <vector>
 #include <array>
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //#include <..\GSL-main\include\gsl\span>
-#include "GSL-main"///gsl-lite.hpp"
-=======
+//#include "GSL-main"///gsl-lite.hpp"
+//=======
 #include "gsl/gsl-lite.hpp"
->>>>>>> 36156feaf67fd9fab30f02627e9a3a201deb7161
+//>>>>>>> 36156feaf67fd9fab30f02627e9a3a201deb7161
 
 #define INDEX(i,j,lda) (j)*(lda) + (i)
 
