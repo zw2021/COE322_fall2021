@@ -243,12 +243,12 @@ int main() {
     cout << "Time taken by function: "
     << duration1.count() << " microseconds" << endl;
 
-    // Test adding 4 by 4 matrices
+    // Test adding 4 by 3 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start2 = high_resolution_clock::now();    // time product function
-        Matrix m7(4,6,4,data1.data());
-        Matrix m8(4,6,4,data2.data());
-        Matrix m9(4,6,4,data3.data());
+        Matrix m7(4,6,3,data1.data());
+        Matrix m8(4,6,3,data2.data());
+        Matrix m9(4,6,3,data3.data());
         m9.addMatrices(m7, m8);
         m8.print();
     auto stop2 = high_resolution_clock::now();
@@ -257,7 +257,7 @@ int main() {
     << duration2.count() << " microseconds" << endl;
 
 
-    // Test adding 6 by 6 matrices
+    // Test adding 6 by 3 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start3 = high_resolution_clock::now();    // time product function
         Matrix m10(6,6,3,data1.data());
