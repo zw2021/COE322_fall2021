@@ -256,20 +256,20 @@ int main() {
     cout << "Time taken by function: "
     << duration2.count() << " microseconds" << endl;
 
-/*
+
     // Test adding 6 by 6 matrices
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start3 = high_resolution_clock::now();    // time product function
-        Matrix m10(6,6,6,data1.data());
-        Matrix m11(6,6,6,data2.data());
-        Matrix m12(6,6,6,data3.data());
+        Matrix m10(6,6,3,data1.data());
+        Matrix m11(6,6,3,data2.data());
+        Matrix m12(6,6,3,data3.data());
         m12.addMatrices(m10, m11);
         m11.print();
     auto stop3 = high_resolution_clock::now();
     auto duration3 = duration_cast<microseconds>(stop3 - start3);
     cout << "Time taken by function: "
     << duration3.count() << " microseconds" << endl;
-*/
+
     // Tests varying dynamic viscosity at different orders of magnitude
     /*
     vector<double> data1 = {4,0,0, 0,0.0035,0,0,0};//Shear Matrix, water.
