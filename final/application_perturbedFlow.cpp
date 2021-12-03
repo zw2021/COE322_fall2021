@@ -226,14 +226,14 @@ int main() {
     vector<double> data1 = perturbedShear_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
     vector<double> data2 = surfaceRoughnes_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
     for (auto jj : lda){
-        //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
+        cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<5; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
-                Matrix m1(4,4096,4,data1.data());
-                Matrix m2(4,4096,4,data2.data());
-                Matrix m3(4,4096,4,data1.data());
+                Matrix m1(jj,4096,jj,data1.data());
+                Matrix m2(jj,4096,jj,data2.data());
+                Matrix m3(jj,4096,jj,data1.data());
                 m3.MatMult(m1,m2);
                 //m2.print();
             auto stop = high_resolution_clock::now();
@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(4,4096,4,data1.data());
-                Matrix mr2(4,4096,4,data2.data());
-                Matrix mr3(4,4096,4,data1.data());
+                Matrix mr1(jj,4096,jj,data1.data());
+                Matrix mr2(jj,4096,jj,data2.data());
+                Matrix mr3(jj,4096,jj,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
