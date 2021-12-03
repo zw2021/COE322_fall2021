@@ -225,15 +225,15 @@ int main() {
 
     vector<double> data1 = perturbedShear_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
     vector<double> data2 = surfaceRoughnes_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
-    for (auto jj : lda){
+    //for (auto jj : lda){
         cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<1000; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
-                Matrix m1(jj,lda[4],jj,data1.data());
-                Matrix m2(jj,lda[4],jj,data2.data());
-                Matrix m3(jj,lda[4],jj,data1.data());
+                Matrix m1(64,lda[4],64,data1.data());
+                Matrix m2(64,lda[4],64,data2.data());
+                Matrix m3(64,lda[4],64,data1.data());
                 m3.MatMult(m1,m2);
                 m2.print();
             auto stop = high_resolution_clock::now();
@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(jj,lda[4],jj,data1.data());
-                Matrix mr2(jj,lda[4],jj,data2.data());
-                Matrix mr3(jj,lda[4],jj,data1.data());
+                Matrix mr1(64,lda[4],64,data1.data());
+                Matrix mr2(64,lda[4],64,data2.data());
+                Matrix mr3(64,lda[4],64,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 mr2.print();
             auto stopRecursive = high_resolution_clock::now();
@@ -263,6 +263,6 @@ int main() {
         // empty time vector
             std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
             std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
-        }
+       // }
     return 0;
 }
