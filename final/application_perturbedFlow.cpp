@@ -213,8 +213,8 @@ int main() {
 
     // double LDA = 50; // LDA, input for input calculator has to be a double
     //int lda = 50; // LDA, input for multiplication functions has to be an int
-    vector<double> LDA = {64, 512, 1024, 2048, 4096,1048576};
-    vector<int> lda = {64, 512, 1024, 2048, 4096,1048576};
+    vector<double> LDA = {64, 512, 1024, 2048, 4096};// 8192 seems to be the limit
+    vector<int> lda = {64, 512, 1024, 2048, 4096};
     double y_max = 50; // radius of the pipe, [m]
     double x = 100.0; // horizontal location on the pipe, [m]
     double z = 50.0; // 3D location on the pipe, [m]
@@ -227,7 +227,7 @@ int main() {
     vector<double> data2 = surfaceRoughnes_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
     //for (auto jj : lda){
         //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
-        //for(int ii=0; ii<1000; ii++){
+        for(int ii=0; ii<1000; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
@@ -255,7 +255,7 @@ int main() {
             cout << "Time taken by Recursive Multiplication function: "
             << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
-        //}
+        }
         cout << "Average time in microseconds for base multiplication: " << endl;
         cout << average(time_BaseMult) << endl;
             cout << "Average time in microseconds for recursive multiplication: " << endl;
