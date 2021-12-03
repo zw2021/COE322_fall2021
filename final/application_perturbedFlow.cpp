@@ -231,9 +231,9 @@ int main() {
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
-                Matrix m1(4,lda[4],4,data1.data());
-                Matrix m2(4,lda[4],4,data2.data());
-                Matrix m3(4,lda[4],4,data1.data());
+                Matrix m1(jj,lda[4],jj,data1.data());
+                Matrix m2(jj,lda[4],jj,data2.data());
+                Matrix m3(jj,lda[4],jj,data1.data());
                 m3.MatMult(m1,m2);
                 //m2.print();
             auto stop = high_resolution_clock::now();
@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(4,lda[4],4,data1.data());
-                Matrix mr2(4,lda[4],4,data2.data());
-                Matrix mr3(4,lda[4],4,data1.data());
+                Matrix mr1(jj,lda[4],jj,data1.data());
+                Matrix mr2(jj,lda[4],jj,data2.data());
+                Matrix mr3(jj,lda[4],jj,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
@@ -256,12 +256,13 @@ int main() {
            // << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
         }
-        cout << "Testing "<< jj  << "dimension" << endl;
-        cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+
+        cout << "++++++++++++++++++++ Testing "<< jj  << " dimension" <<
+                "++++++++++++++++++++++++++++++++" << endl;
             cout << "Average Time taken by Base Multiplication Function: "
             << average(time_BaseMult) << " microseconds" << endl;
 
-            cout << "Average Time taken by Base Multiplication Function: "
+            cout << "Average Time taken by Recursive Multiplication Function: "
             << average(time_RecursiveMult) << " microseconds" << endl;
 
             // empty time vector
