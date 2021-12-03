@@ -213,8 +213,8 @@ int main() {
 
     // double LDA = 50; // LDA, input for input calculator has to be a double
     //int lda = 50; // LDA, input for multiplication functions has to be an int
-    vector<double> LDA = {64, 512, 1024, 2048, 131072,1048576};
-    vector<int> lda = {64, 512, 1024, 2048, 131072,1048576};
+    vector<double> LDA = {64, 512, 1024, 2048, 4096,1048576};
+    vector<int> lda = {64, 512, 1024, 2048, 4096,1048576};
     double y_max = 50; // radius of the pipe, [m]
     double x = 100.0; // horizontal location on the pipe, [m]
     double z = 50.0; // 3D location on the pipe, [m]
@@ -231,9 +231,9 @@ int main() {
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
-                Matrix m1(64,lda[3],64,data1.data());
-                Matrix m2(64,lda[3],64,data2.data());
-                Matrix m3(64,lda[3],64,data1.data());
+                Matrix m1(64,lda[4],64,data1.data());
+                Matrix m2(64,lda[4],64,data2.data());
+                Matrix m3(64,lda[4],64,data1.data());
                 m3.MatMult(m1,m2);
                 //m2.print();
             auto stop = high_resolution_clock::now();
@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(64,lda[3],64,data1.data());
-                Matrix mr2(64,lda[3],64,data2.data());
-                Matrix mr3(64,lda[3],64,data1.data());
+                Matrix mr1(64,lda[4],64,data1.data());
+                Matrix mr2(64,lda[4],64,data2.data());
+                Matrix mr3(64,lda[4],64,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
