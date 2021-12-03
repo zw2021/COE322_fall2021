@@ -214,7 +214,7 @@ int main() {
     // double LDA = 50; // LDA, input for input calculator has to be a double
     //int lda = 50; // LDA, input for multiplication functions has to be an int
     vector<double> LDA = {64, 512, 1024, 2048, 4096};// 8192 seems to be the limit
-    vector<int> lda = {16,32,64, 512, 1024, 2048, 4096};
+    vector<int> lda = {16,32,64, 512, 1024, 2048};
     double y_max = 50; // radius of the pipe, [m]
     double x = 100.0; // horizontal location on the pipe, [m]
     double z = 50.0; // 3D location on the pipe, [m]
@@ -225,15 +225,15 @@ int main() {
 
     vector<double> data1 = perturbedShear_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
     vector<double> data2 = surfaceRoughnes_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
-    //for (auto jj : lda){
+    for (auto jj : lda){
         //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<5; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
-                Matrix m1(4,512,4,data1.data());
-                Matrix m2(4,512,4,data2.data());
-                Matrix m3(4,512,4,data1.data());
+                Matrix m1(4,4096,4,data1.data());
+                Matrix m2(4,4096,4,data2.data());
+                Matrix m3(4,4096,4,data1.data());
                 m3.MatMult(m1,m2);
                 //m2.print();
             auto stop = high_resolution_clock::now();
@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(4,512,4,data1.data());
-                Matrix mr2(4,512,4,data2.data());
-                Matrix mr3(4,512,4,data1.data());
+                Matrix mr1(4,4096,4,data1.data());
+                Matrix mr2(4,4096,4,data2.data());
+                Matrix mr3(4,4096,4,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
@@ -257,7 +257,7 @@ int main() {
                 time_RecursiveMult.push_back(durationRecursive.count());
         }
 
-        cout << "++++++++++++++++++++ Testing "<< 4  << " dimension" <<
+        cout << "++++++++++++++++++++ Testing "<< jj  << " dimension" <<
                 "++++++++++++++++++++++++++++++++" << endl;
             cout << "Average Time taken by Base Multiplication Function: "
             << average(time_BaseMult) << " microseconds" << endl;
@@ -266,8 +266,8 @@ int main() {
             << average(time_RecursiveMult) << " microseconds" << endl;
 
             // empty time vector
-            //std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
-            //std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
-       // }
+            std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
+            std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
+        }
     return 0;
 }
