@@ -226,7 +226,7 @@ int main() {
     vector<double> data1 = perturbedShear_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
     vector<double> data2 = surfaceRoughnes_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
     //for (auto jj : lda){
-        cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
+        //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<1000; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
