@@ -213,12 +213,14 @@ int main() {
     double mu = 1e-4; // dynamic viscosity of water
 
     vector<double> data1 = perturbedShear_calculator( LDA, y_max, x, z, mu);//Shear Matrix, water.
+    vector<double> data2 = surfaceRoughnes_calculator( LDA, y_max, x, z, mu);//Shear Matrix, water.
+
     cout << "Computing Matrix Product. Result is: " << endl;
     auto start = high_resolution_clock::now();    // time product function
         Matrix m1(2,8,2,data1.data());
-        Matrix m2(2,8,2,data1.data());
+        Matrix m2(2,8,2,data2.data());
         Matrix m3(2,8,2,data1.data());
-        m3.addMatrices(m1,m2);
+        m3.MatMult(m1,m2);
         m2.print();
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
