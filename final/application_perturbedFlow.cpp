@@ -213,8 +213,8 @@ int main() {
 
     // double LDA = 50; // LDA, input for input calculator has to be a double
     //int lda = 50; // LDA, input for multiplication functions has to be an int
-    vector<double> LDA = {64, 512, 1024, 16384, 131072,1048576};
-    vector<int> lda = {64, 512, 1024, 16384, 131072,1048576};
+    vector<double> LDA = {64, 512, 1024, 8192, 131072,1048576};
+    vector<int> lda = {64, 512, 1024, 8192, 131072,1048576};
     double y_max = 50; // radius of the pipe, [m]
     double x = 100.0; // horizontal location on the pipe, [m]
     double z = 50.0; // 3D location on the pipe, [m]
