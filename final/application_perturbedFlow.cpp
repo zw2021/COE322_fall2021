@@ -225,7 +225,7 @@ int main() {
 
     vector<double> data1 = perturbedShear_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
     vector<double> data2 = surfaceRoughnes_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
-    //for (auto jj : lda){
+    for (auto jj : lda){
         //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<1000; ii++){
             // Test base multiplication
@@ -238,8 +238,8 @@ int main() {
                 //m2.print();
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
-            cout << "Time taken by Base Multiplication Function: "
-            << duration.count() << " microseconds" << endl;
+            //cout << "Time taken by Base Multiplication Function: "
+            //<< duration.count() << " microseconds" << endl;
                 time_BaseMult.push_back(duration.count());
 
             // Test recursive multiplication
@@ -252,10 +252,11 @@ int main() {
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
             auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
-            cout << "Time taken by Recursive Multiplication function: "
-            << durationRecursive.count() << " microseconds" << endl;
+           // cout << "Time taken by Recursive Multiplication function: "
+           // << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
         }
+        cout << "Testing "<< jj  << "dimension" << endl;
         cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
             cout << "Average Time taken by Base Multiplication Function: "
             << average(time_BaseMult) << " microseconds" << endl;
@@ -266,6 +267,6 @@ int main() {
             // empty time vector
             std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
             std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
-
+        }
     return 0;
 }
