@@ -238,8 +238,8 @@ int main() {
                 m2.print();
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
-            //cout << "Time taken by Base Multiplication Function: "
-            //<< duration.count() << " microseconds" << endl;
+            cout << "Time taken by Base Multiplication Function: "
+            << duration.count() << " microseconds" << endl;
                 time_BaseMult.push_back(duration.count());
 
             // Test recursive multiplication
@@ -252,8 +252,8 @@ int main() {
                 mr2.print();
             auto stopRecursive = high_resolution_clock::now();
             auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
-            //cout << "Time taken by Recursive Multiplication function: "
-            //<< durationRecursive.count() << " microseconds" << endl;
+            cout << "Time taken by Recursive Multiplication function: "
+            << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
         }
         cout << "Average time for base multiplication: " << endl;
