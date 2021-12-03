@@ -4,6 +4,12 @@
 #include <array>
 #include "gsl/gsl-lite.hpp"
 #include "input_forKnownVelocityProfile.h"
+#include "postProcessing.h"
+#include <algorithm>
+
+
+using std::fill;
+
 
 #include <chrono>
 using namespace std::chrono;
@@ -205,41 +211,58 @@ class Matrix {
 
 int main() {
 
-    double LDA = 8;
+    // double LDA = 50; // LDA, input for input calculator has to be a double
+    //int lda = 50; // LDA, input for multiplication functions has to be an int
+    vector<double> LDA = {50, 500, 5000, 50000, 500000};
+    vector<int> lda = {50, 500, 5000, 50000, 500000};
     double y_max = 50; // radius of the pipe, [m]
-    double x = 100.0;
-    double z = 50.0;
+    double x = 100.0; // horizontal location on the pipe, [m]
+    double z = 50.0; // 3D location on the pipe, [m]
     double g = 9.81; // gravity, [kg/m*s^2]
-    double mu = 1e-4; // dynamic viscosity of water
+    double mu = 1e-4; // dynamic viscosity of water, [kg m−1 s−1]
+    vector<double> time_BaseMult;// amount of time for base multiplication
+    vector<double> time_RecursiveMult; // amount of time for recursive application
 
-    vector<double> data1 = perturbedShear_calculator( LDA, y_max, x, z, mu);//Shear Matrix, water.
-    vector<double> data2 = surfaceRoughnes_calculator( LDA, y_max, x, z, mu);//Shear Matrix, water.
+    vector<double> data1 = perturbedShear_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
+    vector<double> data2 = surfaceRoughnes_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
+    for (auto jj : lda){
+        cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
+        for(int ii=0; ii<1000; ii++){
+            // Test base multiplication
+            //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
+            auto start = high_resolution_clock::now();    // time product function
+                Matrix m1(jj,lda[4],jj,data1.data());
+                Matrix m2(jj,lda[4],jj,data2.data());
+                Matrix m3(jj,lda[4],jj,data1.data());
+                m3.MatMult(m1,m2);
+                m2.print();
+            auto stop = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stop - start);
+            //cout << "Time taken by Base Multiplication Function: "
+            //<< duration.count() << " microseconds" << endl;
+                time_BaseMult.push_back(duration.count());
 
-    // Test base multiplication
-    cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
-    auto start = high_resolution_clock::now();    // time product function
-        Matrix m1(4,8,4,data1.data());
-        Matrix m2(4,8,4,data2.data());
-        Matrix m3(4,8,4,data1.data());
-        m3.MatMult(m1,m2);
-        m2.print();
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << "Time taken by Base Multiplication Function: "
-    << duration.count() << " microseconds" << endl;
-
-    // Test recursive multiplication
-    cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
-    auto startRecursive = high_resolution_clock::now();    // time product function
-        Matrix mr1(4,8,4,data1.data());
-        Matrix mr2(4,8,4,data2.data());
-        Matrix mr3(4,8,4,data1.data());
-        mr3.RecursiveMatMult(mr1,mr2);
-        mr2.print();
-    auto stopRecursive = high_resolution_clock::now();
-    auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
-    cout << "Time taken by Recursive Multiplication function: "
-    << durationRecursive.count() << " microseconds" << endl;
-
+            // Test recursive multiplication
+            //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
+            auto startRecursive = high_resolution_clock::now();    // time product function
+                Matrix mr1(jj,lda[4],jj,data1.data());
+                Matrix mr2(jj,lda[4],jj,data2.data());
+                Matrix mr3(jj,lda[4],jj,data1.data());
+                mr3.RecursiveMatMult(mr1,mr2);
+                mr2.print();
+            auto stopRecursive = high_resolution_clock::now();
+            auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
+            //cout << "Time taken by Recursive Multiplication function: "
+            //<< durationRecursive.count() << " microseconds" << endl;
+                time_RecursiveMult.push_back(durationRecursive.count());
+        }
+        cout << "Average time for base multiplication: " << endl;
+        cout << average(time_BaseMult) << endl;
+            cout << "Average time for recursive multiplication: " << endl;
+            cout << average(time_RecursiveMult) << endl;
+        // empty time vector
+            std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
+            std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
+        }
     return 0;
 }
