@@ -227,7 +227,7 @@ int main() {
     vector<double> data2 = surfaceRoughnes_calculator( LDA[5], y_max, x, z, mu);//Shear Matrix, water.
     //for (auto jj : lda){
         //cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
-        for(int ii=0; ii<1000; ii++){
+        //for(int ii=0; ii<1000; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
             auto start = high_resolution_clock::now();    // time product function
@@ -255,7 +255,7 @@ int main() {
             cout << "Time taken by Recursive Multiplication function: "
             << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
-        }
+        //}
         cout << "Average time for base multiplication: " << endl;
         cout << average(time_BaseMult) << endl;
             cout << "Average time for recursive multiplication: " << endl;
