@@ -255,10 +255,10 @@ int main() {
             cout << "Time taken by Recursive Multiplication function: "
             << durationRecursive.count() << " microseconds" << endl;
                 time_RecursiveMult.push_back(durationRecursive.count());
-            // }
-            cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        }
+        cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
             cout << "Average Time taken by Base Multiplication Function: "
-                << average(time_BaseMult) << " microseconds" << endl;
+            << average(time_BaseMult) << " microseconds" << endl;
 
             cout << "Average Time taken by Base Multiplication Function: "
             << average(time_RecursiveMult) << " microseconds" << endl;
@@ -266,7 +266,6 @@ int main() {
             // empty time vector
             std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
             std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
-        }
 
     return 0;
 }
