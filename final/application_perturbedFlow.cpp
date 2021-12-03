@@ -245,9 +245,9 @@ int main() {
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
             auto startRecursive = high_resolution_clock::now();    // time product function
-                Matrix mr1(64,32,64,data1.data());
-                Matrix mr2(64,32,64,data2.data());
-                Matrix mr3(64,32,64,data1.data());
+                Matrix mr1(64,512,64,data1.data());
+                Matrix mr2(64,512,64,data2.data());
+                Matrix mr3(64,512,64,data1.data());
                 mr3.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
