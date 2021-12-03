@@ -266,8 +266,8 @@ int main() {
             << average(time_RecursiveMult) << " microseconds" << endl;
 
             // empty time vector
-            std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
-            std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
+            //std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
+            //std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
        // }
     return 0;
 }
