@@ -223,8 +223,8 @@ int main() {
     vector<double> time_BaseMult;// amount of time for base multiplication
     vector<double> time_RecursiveMult; // amount of time for recursive application
 
-    vector<double> data1 = perturbedShear_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
-    vector<double> data2 = surfaceRoughnes_calculator( LDA[1], y_max, x, z, mu);//Shear Matrix, water.
+    vector<double> data1 = perturbedShear_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
+    vector<double> data2 = surfaceRoughnes_calculator( LDA[4], y_max, x, z, mu);//Shear Matrix, water.
     for (auto jj : lda){
         cout << "Computing time for " << jj << "by"<< jj << "matrix" << endl;
         for(int ii=0; ii<5; ii++){
