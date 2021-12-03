@@ -238,9 +238,9 @@ int main() {
                 //m2.print();
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
-            cout << "Time taken by Base Multiplication Function: "
+            /*cout << "Time taken by Base Multiplication Function: "
             << duration.count() << " microseconds" << endl;
-                time_BaseMult.push_back(duration.count());
+                time_BaseMult.push_back(duration.count());*/
 
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
@@ -252,17 +252,19 @@ int main() {
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
             auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
-            cout << "Time taken by Recursive Multiplication function: "
+            /*cout << "Time taken by Recursive Multiplication function: "
             << durationRecursive.count() << " microseconds" << endl;
-                time_RecursiveMult.push_back(durationRecursive.count());
-        }
-        cout << "Average time in microseconds for base multiplication: " << endl;
-        cout << average(time_BaseMult) << endl;
+                time_RecursiveMult.push_back(durationRecursive.count());*/
+
+            cout << "Average time in microseconds for base multiplication: " << endl;
+            cout << average(time_BaseMult) << endl;
             cout << "Average time in microseconds for recursive multiplication: " << endl;
             cout << average(time_RecursiveMult) << endl;
-        // empty time vector
+            // empty time vector
             std::fill_n(time_BaseMult.begin(), time_BaseMult.size(), 0);
             std::fill_n(time_RecursiveMult.begin(), time_RecursiveMult.size(), 0);
-       // }
+            // }
+        }
+
     return 0;
 }
