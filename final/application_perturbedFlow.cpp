@@ -211,8 +211,8 @@ class Matrix {
 
 int main() {
 
-    vector<double> LDA = {64, 512, 1024, 2048, 4096};// 8192 seems to be the limit
-    vector<int> lda = {16,32,64, 512, 1024, 2048};
+    vector<double> LDA = {64, 512, 1024, 2048,8192 };// 8192 seems to be the limit
+    vector<int> lda = {16,32,64, 512, 1024, 2048, 3072, 3584,4096};
     double y_max = 50; // radius of the pipe, [m]
     double x = 100.0; // horizontal location on the pipe, [m]
     double z = 50.0; // 3D location on the pipe, [m]
@@ -228,11 +228,11 @@ int main() {
         for(int ii=0; ii<5; ii++){
             // Test base multiplication
             //cout << "Computing Matrix Product with Base Multiplication Function. Result is: " << endl;
-                Matrix m1(jj,4096,jj,data1.data());
-                Matrix m2(jj,4096,jj,data2.data());
-                Matrix m3(jj,4096,jj,data1.data());
+                Matrix m1(jj,8192,jj,data1.data());
+                Matrix m2(jj,8192,jj,data2.data());
+                //Matrix m3(jj,8192,jj,data1.data());
             auto start = high_resolution_clock::now();    // time product function
-                m3.MatMult(m1,m2);
+                m1.MatMult(m1,m2);
                 //m2.print();
             auto stop = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stop - start);
@@ -242,11 +242,11 @@ int main() {
 
             // Test recursive multiplication
             //cout << "Computing Matrix Product with Recursive Multiplication Function. Result is: " << endl;
-                Matrix mr1(jj,4096,jj,data1.data());
-                Matrix mr2(jj,4096,jj,data2.data());
-                Matrix mr3(jj,4096,jj,data1.data());
+                Matrix mr1(jj,8192,jj,data1.data());
+                Matrix mr2(jj,8192,jj,data2.data());
+                //Matrix mr3(jj,8192,jj,data1.data());
             auto startRecursive = high_resolution_clock::now();    // time product function
-                mr3.RecursiveMatMult(mr1,mr2);
+                mr1.RecursiveMatMult(mr1,mr2);
                 //mr2.print();
             auto stopRecursive = high_resolution_clock::now();
             auto durationRecursive = duration_cast<microseconds>(stopRecursive - startRecursive);
