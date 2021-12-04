@@ -4,7 +4,7 @@
 #include <array>
 #include "gsl/gsl-lite.hpp"
 
-#define INDEX(i,j,lda) (j)*(lda) + (i)
+#define INDEX(i,j,lda) (j)*(lda) + (i) //Computationally efficient method of indexing through data as it does not have the overhead for calling a function.
 
 
 using namespace std;
@@ -36,27 +36,27 @@ class Matrix {
         this->m = m;
         this->lda = lda;
         this->n = n;
-        this->data = span<double> (data,lda*n);
+        this->data = span<double> (data,lda*n); //Use a span as to not allocate extra memory
 
     }
 
     //return element function (ex. 60.3)
-    double& at(int i, int j) {
-        if(i >= m || j >= n || i < 0 || j < 0) { 
+    double& at(int i, int j) { //Using & allows you to change the data at this element, not just access it.
+        if(i >= m || j >= n || i < 0 || j < 0) { //Ensure index is in bounds before returning
             cout << "Error: index out of bounds" << endl;
             throw(1); 
         }
         return data[j*lda + i];
 
     }
-    auto get_double_data() {
+    auto get_double_data() { //Returns a pointer torwards the entire data set, reducing overhead
         double *adata;
         adata = data.data();
         return adata;
     }
     //Addition method (ex. 60.4)
     void addMatrices(Matrix& B, Matrix& out) {
-        if (this->getrows() != B.getrows() || this->getcols() != B.getcols()) {
+        if (this->getrows() != B.getrows() || this->getcols() != B.getcols()) { //Ensure the matrix addition is legal
             cout << "Error using addMatrices: Matrices do no have the same dimensions" << endl;
             throw(1);
         }
@@ -67,9 +67,9 @@ class Matrix {
         for(int j = 0; j < this->getcols(); j++) {
             for(int i = 0; i < this->getrows(); i++) {
                 #ifdef DEBUG
-                    cdata[INDEX(j,this->getrows(),i)] = this->at(i,j) + B.at(i,j);
+                    cdata[INDEX(j,this->getrows(),i)] = this->at(i,j) + B.at(i,j); //Slightly more overhead, but good for debugging
                 #else
-                    cdata[INDEX(j,this->getrows(),i)] = adata[INDEX(j,this->getlda(),i)] + bdata[INDEX(j,B.getlda(),i)];
+                    cdata[INDEX(j,this->getrows(),i)] = adata[INDEX(j,this->getlda(),i)] + bdata[INDEX(j,B.getlda(),i)]; //Uses the INDEX definition, which is predetermined.
                 #endif
             }
         }
@@ -91,7 +91,7 @@ class Matrix {
     }
 
     //Multiplication functions
-    void MatMult(Matrix& other, Matrix& out) {
+    void MatMult(Matrix& other, Matrix& out) { //Basic multiplication function with O(n^3)
         auto adata = this->get_double_data();
         auto bdata = other.get_double_data();
         auto cdata = out.get_double_data();
@@ -99,9 +99,9 @@ class Matrix {
             for(int j = 0; j < other.getcols(); j++) {
                 for (int k = 0; k < this->n; k++) {
                     #ifdef DEBUG
-                        out.at(i,j) += this->at(i,k) * other.at(k,j);
+                        out.at(i,j) += this->at(i,k) * other.at(k,j); //slower
                     #else
-                        cdata[INDEX(i,j,out.getlda())] += adata[INDEX(i,k,this->lda)] * bdata[INDEX(k,j,other.getlda())];
+                        cdata[INDEX(i,j,out.getlda())] += adata[INDEX(i,k,this->lda)] * bdata[INDEX(k,j,other.getlda())]; //faster
                     #endif
                 }
             }
@@ -110,8 +110,9 @@ class Matrix {
     }
 
 
-    void BlockedMatMult(Matrix& other, Matrix& out) {
+    void BlockedMatMult(Matrix& other, Matrix& out) { //Definition of the blocked method, which splits up the matrices into groups of 4 for the multiplication process
 
+        //None of these matrices need to allocate new memory; all point torwards old memory
         Matrix atl = this->Left(this->getcols()/2).Top(this->getrows()/2);
         Matrix atr = this->Right(this->getcols()/2).Top(this->getrows()/2);
         Matrix abl = this->Left(this->getcols()/2).Bot(this->getrows()/2);
@@ -142,9 +143,9 @@ class Matrix {
     }
 
     //Ex 60.7
-    void RecursiveMatMult(Matrix& other, Matrix& out) {
+    void RecursiveMatMult(Matrix& other, Matrix& out) { //Same as BlockedMatMult, but with recursion to keep breaking down the matrix sizes until reaching sufficient detail
 
-        if(this->getrows() < 4 && this->getcols() < 4 && other.getrows() < 4 && other.getcols() < 4) {
+        if(this->getrows() < 4 && this->getcols() < 4 && other.getrows() < 4 && other.getcols() < 4) { //Stops the recursive process once the matrix size is < 4
             this->MatMult(other,out);
         }
         else {
@@ -188,7 +189,7 @@ class Matrix {
         cout << endl;
     }
 
-    void printdata() {
+    void printdata() { //prints the data of the full matrix, not just the submatrix. Useful for testing
         for(int i = 0; i < lda*n; i++) {
             cout << data[i] << " ";
         }
@@ -264,13 +265,5 @@ int main() {
     
     m24c.print();
 
-    //m3.print();
-    //m3.at(0,0);
-    //m3.printdata();
-    /* METHOD TO CHANGE ELEMENTS IN A MATRIX
-    double& x = mat.at(1,1);
-    x = 5;
-    cout << mat.at(1,1) << endl;
-    */
     return 0;
 }
