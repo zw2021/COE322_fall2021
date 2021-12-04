@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <chrono>
 //<<<<<<< HEAD
 //#include <..\GSL-main\include\gsl\span>
 //#include "GSL-main"///gsl-lite.hpp"
@@ -9,12 +10,11 @@
 #include "gsl/gsl-lite.hpp"
 //>>>>>>> 36156feaf67fd9fab30f02627e9a3a201deb7161
 
-#define INDEX(i,j,lda) (j)*(lda) + (i) //Computationally efficient method of indexing through data as it does not have the overhead for calling a function.
+#define INDEX(i,j,lda) (j)*(lda) + (i)
 
-
+using namespace std::chrono;
 using namespace std;
 using gsl::span;
-
 
 
 class Matrix {
@@ -41,27 +41,27 @@ class Matrix {
         this->m = m;
         this->lda = lda;
         this->n = n;
-        this->data = span<double> (data,lda*n); //Use a span as to not allocate extra memory
+        this->data = span<double> (data,lda*n);
 
     }
 
     //return element function (ex. 60.3)
-    double& at(int i, int j) { //Using & allows you to change the data at this element, not just access it.
-        if(i >= m || j >= n || i < 0 || j < 0) { //Ensure index is in bounds before returning
+    double& at(int i, int j) {
+        if(i >= m || j >= n || i < 0 || j < 0) { 
             cout << "Error: index out of bounds" << endl;
             throw(1); 
         }
         return data[j*lda + i];
 
     }
-    auto get_double_data() { //Returns a pointer torwards the entire data set, reducing overhead
+    auto get_double_data() {
         double *adata;
         adata = data.data();
         return adata;
     }
     //Addition method (ex. 60.4)
     void addMatrices(Matrix& B, Matrix& out) {
-        if (this->getrows() != B.getrows() || this->getcols() != B.getcols()) { //Ensure the matrix addition is legal
+        if (this->getrows() != B.getrows() || this->getcols() != B.getcols()) {
             cout << "Error using addMatrices: Matrices do no have the same dimensions" << endl;
             throw(1);
         }
@@ -72,9 +72,9 @@ class Matrix {
         for(int j = 0; j < this->getcols(); j++) {
             for(int i = 0; i < this->getrows(); i++) {
                 #ifdef DEBUG
-                    cdata[INDEX(j,this->getrows(),i)] = this->at(i,j) + B.at(i,j); //Slightly more overhead, but good for debugging
+                    cdata[INDEX(j,this->getrows(),i)] = this->at(i,j) + B.at(i,j);
                 #else
-                    cdata[INDEX(j,this->getrows(),i)] = adata[INDEX(j,this->getlda(),i)] + bdata[INDEX(j,B.getlda(),i)]; //Uses the INDEX definition, which is predetermined.
+                    cdata[INDEX(j,this->getrows(),i)] = adata[INDEX(j,this->getlda(),i)] + bdata[INDEX(j,B.getlda(),i)];
                 #endif
             }
         }
@@ -96,7 +96,7 @@ class Matrix {
     }
 
     //Multiplication functions
-    void MatMult(Matrix& other, Matrix& out) { //Basic multiplication function with O(n^3)
+    void MatMult(Matrix& other, Matrix& out) {
         auto adata = this->get_double_data();
         auto bdata = other.get_double_data();
         auto cdata = out.get_double_data();
@@ -104,9 +104,9 @@ class Matrix {
             for(int j = 0; j < other.getcols(); j++) {
                 for (int k = 0; k < this->n; k++) {
                     #ifdef DEBUG
-                        out.at(i,j) += this->at(i,k) * other.at(k,j); //slower
+                        out.at(i,j) += this->at(i,k) * other.at(k,j);
                     #else
-                        cdata[INDEX(i,j,out.getlda())] += adata[INDEX(i,k,this->lda)] * bdata[INDEX(k,j,other.getlda())]; //faster
+                        cdata[INDEX(i,j,out.getlda())] += adata[INDEX(i,k,this->lda)] * bdata[INDEX(k,j,other.getlda())];
                     #endif
                 }
             }
@@ -115,9 +115,8 @@ class Matrix {
     }
 
 
-    void BlockedMatMult(Matrix& other, Matrix& out) { //Definition of the blocked method, which splits up the matrices into groups of 4 for the multiplication process
+    void BlockedMatMult(Matrix& other, Matrix& out) {
 
-        //None of these matrices need to allocate new memory; all point torwards old memory
         Matrix atl = this->Left(this->getcols()/2).Top(this->getrows()/2);
         Matrix atr = this->Right(this->getcols()/2).Top(this->getrows()/2);
         Matrix abl = this->Left(this->getcols()/2).Bot(this->getrows()/2);
@@ -148,9 +147,8 @@ class Matrix {
     }
 
     //Ex 60.7
-    void RecursiveMatMult(Matrix& other, Matrix& out) { //Same as BlockedMatMult, but with recursion to keep breaking down the matrix sizes until reaching sufficient detail
-
-        if(this->getrows() < 4 && this->getcols() < 4 && other.getrows() < 4 && other.getcols() < 4) { //Stops the recursive process once the matrix size is < 4
+    void RecursiveMatMult(Matrix& other, Matrix& out,int k) {
+        if(this->getrows() < k && this->getcols() < k && other.getrows() < k && other.getcols() < k) {
             this->MatMult(other,out);
         }
         else {
@@ -169,17 +167,17 @@ class Matrix {
             Matrix obl = out.Left(out.getcols()/2).Bot(out.getrows()/2);
             Matrix obr = out.Right(out.getcols()/2).Bot(out.getrows()/2);
 
-            atl.RecursiveMatMult(btl,otl);
-            atr.RecursiveMatMult(bbl,otl);
+            atl.RecursiveMatMult(btl,otl,k);
+            atr.RecursiveMatMult(bbl,otl,k);
 
-            atl.RecursiveMatMult(btr,otr);
-            atr.RecursiveMatMult(bbr,otr);
+            atl.RecursiveMatMult(btr,otr,k);
+            atr.RecursiveMatMult(bbr,otr,k);
 
-            abl.RecursiveMatMult(btl,obl);
-            abr.RecursiveMatMult(bbl,obl);
+            abl.RecursiveMatMult(btl,obl,k);
+            abr.RecursiveMatMult(bbl,obl,k);
 
-            abl.RecursiveMatMult(btr,obr);
-            abr.RecursiveMatMult(bbr,obr);
+            abl.RecursiveMatMult(btr,obr,k);
+            abr.RecursiveMatMult(bbr,obr,k);
         }
     }
 
@@ -194,7 +192,7 @@ class Matrix {
         cout << endl;
     }
 
-    void printdata() { //prints the data of the full matrix, not just the submatrix. Useful for testing
+    void printdata() {
         for(int i = 0; i < lda*n; i++) {
             cout << data[i] << " ";
         }
@@ -266,9 +264,22 @@ int main() {
     Matrix m24c(8,8,8,r8c83.data());
     m24a.print();
     m24b.print();
-    m24a.RecursiveMatMult(m24b,m24c);
-    
-    m24c.print();
-
+    for(int i=2;i<66;i++){
+    auto start = high_resolution_clock::now();
+    m24a.RecursiveMatMult(m24b,m24c,i);
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<nanoseconds>(stop - start);
+    cout << "Time taken by n< " <<i<<" : "
+	 << duration.count() << " nanoseconds" << endl;
+   // m24c.print();
+	}
+    //m3.print();
+    //m3.at(0,0);
+    //m3.printdata();
+    /* METHOD TO CHANGE ELEMENTS IN A MATRIX
+    double& x = mat.at(1,1);
+    x = 5;
+    cout << mat.at(1,1) << endl;
+    */
     return 0;
 }
